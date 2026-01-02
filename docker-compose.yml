@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: quickbox-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${DB_NAME:-quickbox_db}
+      MYSQL_USER: ${DB_USER:-quickbox_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-quickbox_pass}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - quickbox-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-rootpassword}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API (Spring Boot)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: quickbox-backend
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILE:-prod}
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME:-quickbox_db}
+      DB_USER: ${DB_USER:-quickbox_user}
+      DB_PASSWORD: ${DB_PASSWORD:-quickbox_pass}
+      JWT_SECRET: ${JWT_SECRET:-change-this-secret-key-in-production}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:4200}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - quickbox-network
+    volumes:
+      - ./backend/uploads:/app/uploads
+
+  # Frontend (Angular)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: quickbox-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-4200}:80"
+    environment:
+      API_URL: ${API_URL:-http://localhost:8080/api}
+    depends_on:
+      - backend
+    networks:
+      - quickbox-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  quickbox-network:
+    driver: bridge

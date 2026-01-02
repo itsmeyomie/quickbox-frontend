@@ -1,0 +1,42 @@
+@import "assets/css/bootstrap.min.css";
+@import "assets/css/owl.carousel.min.css";
+@import "assets/css/slicknav.css";
+@import "assets/css/flaticon.css";
+@import "assets/css/animate.min.css";
+@import "assets/css/magnific-popup.css";
+@import "assets/css/fontawesome-all.min.css";
+@import "assets/css/themify-icons.css";
+@import "assets/css/slick.css";
+@import "assets/css/nice-select.css";
+@import "assets/css/style.css";
+
+/* Font loading optimization - ensure all fonts use font-display: swap */
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-display: swap;
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-display: swap;
+}
+
+/* Preloader hiding - ensure it can be hidden */
+#preloader-active[style*="display: none"],
+#preloader-active.hidden,
+#preloader-active[style*="visibility: hidden"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+  position: fixed !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+/* Force hide preloader after app loads */
+body.loaded #preloader-active {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
