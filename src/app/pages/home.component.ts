@@ -383,7 +383,7 @@ import { PackageResponse } from '../models/package.model';
     </div>
     <!-- Why Choose QuickBox Area End -->
     <!--? How It Works Area Start -->
-    <div class="testimonial-area testimonial-padding" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 100px 0;">
+    <div class="testimonial-area testimonial-padding" style="background: linear-gradient(135deg, #5dade2 0%, #3498db 100%); padding: 100px 0;">
         <div class="container">
             <!-- Section Tittle -->
             <div class="row">
@@ -399,7 +399,7 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 40px;">
                     <div class="text-center" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 50px 30px; border-radius: 20px; height: 100%; transition: transform 0.3s ease;">
                         <div style="width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                            <span class="flaticon-shipped" style="font-size: 60px; color: #667eea;"></span>
+                            <span class="flaticon-shipped" style="font-size: 60px; color: #5dade2;"></span>
                         </div>
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">1</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">Book Your Delivery</h3>
@@ -416,7 +416,7 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 40px;">
                     <div class="text-center" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 50px 30px; border-radius: 20px; height: 100%; transition: transform 0.3s ease;">
                         <div style="width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                            <span class="flaticon-support" style="font-size: 60px; color: #667eea;"></span>
+                            <span class="flaticon-support" style="font-size: 60px; color: #5dade2;"></span>
                         </div>
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">2</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">We Pick & Track</h3>
@@ -433,7 +433,7 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 40px;">
                     <div class="text-center" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 50px 30px; border-radius: 20px; height: 100%; transition: transform 0.3s ease;">
                         <div style="width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                            <span class="flaticon-clock" style="font-size: 60px; color: #667eea;"></span>
+                            <span class="flaticon-clock" style="font-size: 60px; color: #5dade2;"></span>
                         </div>
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">3</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">Fast Delivery</h3>

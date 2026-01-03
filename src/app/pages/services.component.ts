@@ -97,6 +97,39 @@ import { RouterLink } from '@angular/router';
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <span class="flaticon-shipped"></span>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a routerLink="/services">📋 Order Fulfillment</a></h5>
+                                <p>We provide complete services from receiving, processing and delivering orders to clients at their doorsteps.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <span class="flaticon-support"></span>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a routerLink="/services">🚚 Last Mile Delivery and COD</a></h5>
+                                <p>QuickBox fulfillment center helps you in delivering the products at the doorstep of your clients and provide you a reliable and affordable price with other added features like COD and return shipping.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-cat text-center mb-50">
+                            <div class="cat-icon">
+                                <span class="flaticon-ship"></span>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a routerLink="/services">📦 Pick and Pack</a></h5>
+                                <p>We offer a comprehensive packaging service that includes repacking of finished products and delivering to your desired position in good condition.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

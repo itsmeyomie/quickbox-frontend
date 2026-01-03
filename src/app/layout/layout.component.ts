@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf, NgFor, CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, CommonModule],
   template: `
 <header>
     <!-- Header Start -->
@@ -36,7 +36,7 @@ import { NgIf, NgFor } from '@angular/common';
                 <div class="container">
                     <div class="row align-items-center">
                         <!-- Logo -->
-                        <div class="col-xl-2 col-lg-2">
+                        <div class="col-xl-2 col-lg-2 col-md-6 col-6">
                             <div class="logo">
                                 <a routerLink="/">
                                     <!-- Logo Placeholder - Replace 'assets/img/logo/logo.png' with your logo path -->
@@ -44,47 +44,89 @@ import { NgIf, NgFor } from '@angular/common';
                                     <img 
                                         src="assets/img/logo/logo.png" 
                                         alt="QuickBox Logo" 
-                                        style="width: 180px; height: 60px; object-fit: contain; display: block;"
+                                        style="width: 140px; height: 50px; object-fit: contain; display: block; max-width: 100%;"
                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                                     />
                                     <!-- Fallback if image not found -->
-                                    <div style="display: none; align-items: center; height: 60px; width: 180px; background: #f15f22; color: white; padding: 10px 15px; border-radius: 5px; font-weight: bold; font-size: 24px; font-family: 'Teko', sans-serif;">
+                                    <div style="display: none; align-items: center; height: 50px; width: 140px; background: #f15f22; color: white; padding: 8px 12px; border-radius: 5px; font-weight: bold; font-size: 20px; font-family: 'Teko', sans-serif;">
                                         QB
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-xl-10 col-lg-10">
+                        <!-- Desktop Menu -->
+                        <div class="col-xl-10 col-lg-10 d-none d-lg-block">
                             <div class="menu-wrapper d-flex align-items-center justify-content-end" style="gap: 30px;">
                                 <!-- Main-menu -->
-                                <div class="main-menu d-none d-lg-block" style="flex: 1; max-width: 600px;">
+                                <div class="main-menu" style="flex: 1; max-width: 600px;">
                                     <nav> 
                                         <ul id="navigation" style="display: flex; gap: 30px; margin: 0; padding: 0; list-style: none; justify-content: flex-end;">                                                                                          
-                                            <li><a routerLink="/" style="padding: 10px 0;">Home</a></li>
-                                            <li><a routerLink="/about" style="padding: 10px 0;">About</a></li>
-                                            <li><a routerLink="/services" style="padding: 10px 0;">Services</a></li>
-                                            <li><a routerLink="/blog" style="padding: 10px 0;">Blog</a>
-                                                <ul class="submenu">
-                                                    <li><a routerLink="/blog">Blog</a></li>
-                                                    <li><a routerLink="/blog/details">Blog Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a routerLink="/contact" style="padding: 10px 0;">Contact</a></li>
+                                            <li><a routerLink="/" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-home" style="font-size: 14px;"></i> Home</a></li>
+                                            <li><a routerLink="/about" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-info-circle" style="font-size: 14px;"></i> About</a></li>
+                                            <li><a routerLink="/services" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><span class="flaticon-shipped" style="font-size: 14px; color: #f15f22;"></span> Services</a></li>
+                                            <li><a routerLink="/blog" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-blog" style="font-size: 14px;"></i> Blog</a></li>
+                                            <li><a routerLink="/contact" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-envelope" style="font-size: 14px;"></i> Contact</a></li>
                                         </ul>
                                     </nav>
                                 </div>
                                 <!-- Header-btn -->
-                                <div class="header-right-btn d-none d-lg-block" style="display: flex; gap: 15px; align-items: center; flex-shrink: 0;">
+                                <div class="header-right-btn" style="display: flex; gap: 15px; align-items: center; flex-shrink: 0;">
                                     <a routerLink="/login" class="btn header-btn" style="background: #f15f22; padding: 12px 24px; border-radius: 5px; text-decoration: none; color: white; font-weight: 600; transition: all 0.3s ease; white-space: nowrap;">Login</a>
                                     <a routerLink="/contact" class="btn header-btn" style="white-space: nowrap;">Get A Quote</a>
                                 </div>
                             </div>
-                        </div> 
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                        <!-- Mobile Menu Toggle Button -->
+                        <div class="col-md-6 col-6 d-lg-none text-end">
+                            <button 
+                                type="button" 
+                                (click)="mobileMenuOpen = !mobileMenuOpen"
+                                style="background: none; border: none; padding: 10px; cursor: pointer; font-size: 24px; color: #333;"
+                                aria-label="Toggle menu">
+                                <i [class]="mobileMenuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
+                            </button>
                         </div>
                     </div>
+                    <!-- Mobile Menu Dropdown -->
+                    <div class="row d-lg-none" *ngIf="mobileMenuOpen" style="position: relative; z-index: 999;">
+                        <div class="col-12">
+                            <div class="mobile-menu-dropdown" style="background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 8px; margin-top: 15px; padding: 10px 0;">
+                                <nav>
+                                    <ul style="list-style: none; padding: 0; margin: 0;">
+                                        <li>
+                                            <a routerLink="/" (click)="mobileMenuOpen = false" style="display: flex; align-items: center; padding: 15px 20px; text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: all 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                                <i class="fas fa-home" style="margin-right: 12px; color: #f15f22; width: 20px; text-align: center;"></i>Home
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a routerLink="/services" (click)="mobileMenuOpen = false" style="display: flex; align-items: center; padding: 15px 20px; text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: all 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                                <span class="flaticon-shipped" style="margin-right: 12px; color: #f15f22; width: 20px; text-align: center; font-size: 18px;"></span>Services
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a routerLink="/about" (click)="mobileMenuOpen = false" style="display: flex; align-items: center; padding: 15px 20px; text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: all 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                                <i class="fas fa-info-circle" style="margin-right: 12px; color: #f15f22; width: 20px; text-align: center;"></i>About
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a routerLink="/login" (click)="mobileMenuOpen = false" style="display: flex; align-items: center; padding: 15px 20px; text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: all 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                                <i class="fas fa-sign-in-alt" style="margin-right: 12px; color: #f15f22; width: 20px; text-align: center;"></i>Login
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a routerLink="/contact" (click)="mobileMenuOpen = false" style="display: flex; align-items: center; padding: 15px 20px; text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: all 0.3s;">
+                                                <i class="fas fa-quote-left" style="margin-right: 12px; color: #f15f22; width: 20px; text-align: center;"></i>Get A Quote
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu Backdrop -->
+                    <div class="d-lg-none" *ngIf="mobileMenuOpen" 
+                         (click)="mobileMenuOpen = false"
+                         style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); z-index: 998; animation: fadeIn 0.2s ease;"></div>
                 </div>
             </div>
         </div>
@@ -157,10 +199,10 @@ import { NgIf, NgFor } from '@angular/common';
                             <!-- logo -->
                             <div class="footer-logo" style="margin-bottom: 25px;">
                                 <a routerLink="/">
-                                    <!-- Footer Logo Placeholder - Replace 'assets/img/logo/logo2_footer.png' with your logo path -->
+                                    <!-- Footer Logo - Same image as header logo -->
                                     <!-- Exact dimensions: 150px width x 50px height -->
                                     <img 
-                                        src="assets/img/logo/logo2_footer.png" 
+                                        src="assets/img/logo/logo.png" 
                                         alt="QuickBox Logo" 
                                         style="width: 150px; height: 50px; object-fit: contain; display: block;"
                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -203,5 +245,7 @@ import { NgIf, NgFor } from '@angular/common';
 </footer>
   `
 })
-export class LayoutComponent {}
+export class LayoutComponent {
+  mobileMenuOpen = false;
+}
 

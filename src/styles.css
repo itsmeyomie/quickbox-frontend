@@ -40,3 +40,114 @@ body.loaded #preloader-active {
   visibility: hidden !important;
   opacity: 0 !important;
 }
+
+/* Mobile Menu Optimization */
+@media (max-width: 991px) {
+  /* Mobile Header */
+  .header-area .main-header {
+    padding: 15px 0 !important;
+  }
+  
+  /* Mobile Logo */
+  .logo img {
+    max-width: 120px !important;
+    height: auto !important;
+  }
+  
+  /* Mobile Menu Button */
+  button[aria-label="Toggle menu"] {
+    font-size: 28px !important;
+    color: #f15f22 !important;
+    padding: 8px 12px !important;
+  }
+  
+  /* Mobile Menu Dropdown */
+  .mobile-menu-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: white;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    border-radius: 0 0 10px 10px;
+    animation: slideDown 0.3s ease;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Mobile Menu Links */
+  .mobile-menu-dropdown a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .mobile-menu-dropdown a:hover,
+  .mobile-menu-dropdown a:active {
+    background: #f8f8f8;
+    color: #f15f22;
+    padding-left: 25px;
+  }
+  
+  .mobile-menu-dropdown a i {
+    width: 25px;
+    text-align: center;
+  }
+  
+  /* Ensure header is sticky on mobile */
+  .header-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 998;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* Mobile container padding */
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 575px) {
+  .logo img {
+    max-width: 100px !important;
+  }
+  
+  button[aria-label="Toggle menu"] {
+    font-size: 24px !important;
+    padding: 6px 10px !important;
+  }
+  
+  .mobile-menu-dropdown a {
+    padding: 12px 15px;
+    font-size: 15px;
+  }
+}
