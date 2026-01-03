@@ -16,7 +16,7 @@ import { NgIf, NgFor, CommonModule } from '@angular/common';
                         <div class="row d-flex justify-content-between align-items-center">
                             <div class="header-info-left">
                                 <ul style="display: flex; gap: 25px; margin: 0; padding: 0; list-style: none; align-items: center;">     
-                                    <li style="margin: 0;">Phone: 0722 883443 / 0118047315</li>
+                                    <li style="margin: 0;">Phone: 0118047315</li>
                                     <li style="margin: 0;">Email: info&#64;quickboxcourier.co.ke</li>
                                 </ul>
                             </div>
@@ -148,7 +148,7 @@ import { NgIf, NgFor, CommonModule } from '@angular/common';
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4">
-                            <span class="contact-number f-right">0722 883443 / 0118047315</span>
+                            <span class="contact-number f-right">0118047315</span>
                         </div>
                     </div>
                 </div>

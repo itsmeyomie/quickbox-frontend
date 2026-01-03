@@ -126,7 +126,7 @@ import { RouterLink } from '@angular/router';
                             </div>
                             <div class="cat-cap">
                                 <h5><a routerLink="/services">📦 Pick and Pack</a></h5>
-                                <p>We offer a comprehensive packaging service that includes repacking of finished products and delivering to your desired position in good condition.</p>
+                                <p>We provide a complete packaging solution, carefully picking finished products, securely packaging them, and delivering them to your specified destination in excellent condition.</p>
                             </div>
                         </div>
                     </div>

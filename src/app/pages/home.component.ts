@@ -68,7 +68,7 @@ import { PackageResponse } from '../models/package.model';
                         </div>
                         <div class="info-caption">
                             <p style="margin-bottom: 8px; font-weight: 600;">Call Us Anytime</p>
-                            <span style="display: block;">0722 883443 / 0118047315</span>
+                            <span style="display: block;">0118047315</span>
                         </div>
                     </div>
                 </div>
@@ -352,7 +352,7 @@ import { PackageResponse } from '../models/package.model';
                         </div>
                         <div class="cat-cap" style="flex: 1;">
                             <h5 style="margin-bottom: 15px; color: #333; font-size: 20px; min-height: 50px; display: flex; align-items: center; justify-content: center;">Nationwide Coverage</h5>
-                            <p style="color: #666; line-height: 1.8; margin: 0;">Serving all areas of Nairobi and beyond. We deliver wherever you need us, when you need us.</p>
+                            <p style="color: #666; line-height: 1.8; margin: 0;">Serving all areas of Nairobi and countrywide across Kenya. We deliver wherever you need us, when you need us.</p>
                         </div>
                     </div>
                 </div>
@@ -383,7 +383,7 @@ import { PackageResponse } from '../models/package.model';
     </div>
     <!-- Why Choose QuickBox Area End -->
     <!--? How It Works Area Start -->
-    <div class="testimonial-area testimonial-padding" style="background: linear-gradient(135deg, #5dade2 0%, #3498db 100%); padding: 100px 0;">
+    <div class="testimonial-area testimonial-padding" style="background: linear-gradient(135deg, #001f3f 0%, #003d7a 100%); padding: 100px 0;">
         <div class="container">
             <!-- Section Tittle -->
             <div class="row">
@@ -399,7 +399,7 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 40px;">
                     <div class="text-center" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 50px 30px; border-radius: 20px; height: 100%; transition: transform 0.3s ease;">
                         <div style="width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                            <span class="flaticon-shipped" style="font-size: 60px; color: #5dade2;"></span>
+                            <span class="flaticon-shipped" style="font-size: 60px; color: #001f3f;"></span>
                         </div>
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">1</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">Book Your Delivery</h3>
@@ -416,7 +416,7 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 40px;">
                     <div class="text-center" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 50px 30px; border-radius: 20px; height: 100%; transition: transform 0.3s ease;">
                         <div style="width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                            <span class="flaticon-support" style="font-size: 60px; color: #5dade2;"></span>
+                            <span class="flaticon-support" style="font-size: 60px; color: #001f3f;"></span>
                         </div>
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">2</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">We Pick & Track</h3>
@@ -433,7 +433,7 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 40px;">
                     <div class="text-center" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 50px 30px; border-radius: 20px; height: 100%; transition: transform 0.3s ease;">
                         <div style="width: 120px; height: 120px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                            <span class="flaticon-clock" style="font-size: 60px; color: #5dade2;"></span>
+                            <span class="flaticon-clock" style="font-size: 60px; color: #001f3f;"></span>
                         </div>
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">3</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">Fast Delivery</h3>
@@ -480,8 +480,8 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-12">
                     <div class="section-tittle text-center mb-80">
                         <span style="color: #f15f22; font-size: 16px; letter-spacing: 2px; font-weight: 600;">Coverage Area</span>
-                        <h2 style="color: #333; margin-top: 15px; font-size: 42px; font-weight: 700;">Serving All of Nairobi</h2>
-                        <p style="color: #666; margin-top: 20px; font-size: 18px; max-width: 700px; margin-left: auto; margin-right: auto;">From Westlands to Eastlands, Karen to Kasarani - we deliver everywhere in Nairobi</p>
+                        <h2 style="color: #333; margin-top: 15px; font-size: 42px; font-weight: 700;">Serving Nairobi & Countrywide</h2>
+                        <p style="color: #666; margin-top: 20px; font-size: 18px; max-width: 700px; margin-left: auto; margin-right: auto;">From Westlands to Eastlands, Karen to Kasarani - we deliver everywhere in Nairobi and across Kenya</p>
                     </div>
                 </div>
             </div>
