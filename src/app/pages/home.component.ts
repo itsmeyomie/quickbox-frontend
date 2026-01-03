@@ -67,8 +67,9 @@ import { PackageResponse } from '../models/package.model';
                             <span class="flaticon-support"></span>
                         </div>
                         <div class="info-caption">
-                            <p style="margin-bottom: 8px; font-weight: 600;">Call Us Anytime</p>
-                            <span style="display: block;">0118047315</span>
+                            <p style="margin-bottom: 8px; font-weight: 600;">Dedicated Call Center</p>
+                            <span style="display: block; font-weight: 600; color: #f15f22; margin-bottom: 5px;">0118047315</span>
+                            <span style="display: block; font-size: 14px; color: #666;">Call us anytime</span>
                         </div>
                     </div>
                 </div>
@@ -374,7 +375,7 @@ import { PackageResponse } from '../models/package.model';
                         </div>
                         <div class="cat-cap" style="flex: 1;">
                             <h5 style="margin-bottom: 15px; color: #333; font-size: 20px; min-height: 50px; display: flex; align-items: center; justify-content: center;">24/7 Customer Support</h5>
-                            <p style="color: #666; line-height: 1.8; margin: 0;">Round-the-clock assistance. Our dedicated team is always ready to help with your delivery needs.</p>
+                            <p style="color: #666; line-height: 1.8; margin: 0;">We have a dedicated call center providing round-the-clock assistance. Our professional team is always ready to help with your delivery needs.</p>
                         </div>
                     </div>
                 </div>

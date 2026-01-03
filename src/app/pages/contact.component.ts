@@ -94,13 +94,14 @@ import { Contact } from '../models/contact.model';
                             <span class="contact-info__icon"><i class="ti-home"></i></span>
                             <div class="media-body">
                                 <h3>QuickBox Headquarters</h3>
-                                <p>123 Delivery Street, Suite 100<br>New York, NY 10001</p>
+                                <p>Embakasi, Nairobi<br>Kenya</p>
                             </div>
                         </div>
                         <div class="media contact-info">
                             <span class="contact-info__icon"><i class="ti-tablet"></i></span>
                             <div class="media-body">
                                 <h3>0118047315</h3>
+                                <p style="font-weight: 600; color: #f15f22; margin-bottom: 5px;">Dedicated Call Center</p>
                                 <p>Mon to Fri 8am to 8pm</p>
                             </div>
                         </div>

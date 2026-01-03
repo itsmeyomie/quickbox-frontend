@@ -214,8 +214,14 @@ import { NgIf, NgFor, CommonModule } from '@angular/common';
                                 </a>
                             </div>
                             <div class="footer-tittle">
-                                <div class="footer-pera" style="margin-bottom: 25px;">
+                                <div class="footer-pera" style="margin-bottom: 20px;">
                                     <p class="info1" style="line-height: 1.8; margin-bottom: 0;">QuickBox delivers fast, reliable shipping solutions. We understand the importance of getting your packages where they need to be, when they need to be there.</p>
+                                </div>
+                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+                                    <p style="margin: 0; line-height: 1.6; color: rgba(255,255,255,0.9);">
+                                        <i class="fas fa-map-marker-alt" style="margin-right: 8px; color: #f15f22;"></i>
+                                        <strong>Location:</strong> Embakasi, Nairobi, Kenya
+                                    </p>
                                 </div>
                             </div>
                             <!-- Footer Social -->
