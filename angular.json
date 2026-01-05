@@ -15,6 +15,7 @@
           "options": {
             "outputPath": "dist/quickbox-angular",
             "index": "src/index.html",
+            "baseHref": "/",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -26,7 +27,12 @@
                 "input": "public"
               },
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": ".htaccess",
+                "input": ".",
+                "output": "/"
+              }
             ],
             "styles": [
               "src/styles.css"

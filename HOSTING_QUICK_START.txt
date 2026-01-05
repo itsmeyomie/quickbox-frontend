@@ -1,0 +1,56 @@
+╔══════════════════════════════════════════════════════════════╗
+║     QUICKBOX ANGULAR - QUICK HOSTING GUIDE                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+STEP 1: Build for Production
+─────────────────────────────
+Windows:
+  .\build-for-production.bat
+
+Linux/Mac:
+  chmod +x build-for-production.sh
+  ./build-for-production.sh
+
+Or manually:
+  npm install
+  npm run build:prod
+
+STEP 2: Update API URL (Optional - Can do later)
+─────────────────────────────────────────────────
+Edit: src/environments/environment.prod.ts
+
+Change:
+  apiUrl: 'http://localhost:8080/api'
+
+To your backend URL:
+  apiUrl: 'https://api.yourdomain.com/api'
+
+Then rebuild: npm run build:prod
+
+STEP 3: Upload Files
+─────────────────────
+Upload ALL files from: dist/quickbox-angular/
+
+To your web server:
+  - Apache: public_html, www, or htdocs
+  - Nginx: /var/www/html or /usr/share/nginx/html
+  - Static hosting: Follow their upload instructions
+
+IMPORTANT: Upload the .htaccess file too (for Apache)!
+
+STEP 4: Test
+────────────
+Visit your website: https://yourdomain.com
+
+═══════════════════════════════════════════════════════════════
+
+WHEN BACKEND IS READY:
+──────────────────────
+1. Update apiUrl in environment.prod.ts
+2. Rebuild: npm run build:prod
+3. Upload new build files
+4. Done!
+
+═══════════════════════════════════════════════════════════════
+
+For detailed instructions, see: HOSTING_GUIDE.md

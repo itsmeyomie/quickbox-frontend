@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.yourdomain.com/api' // Replace with your production API URL
+  // Update this URL when your Spring Boot backend is hosted
+  // For now, you can use a placeholder or leave it pointing to localhost for testing
+  apiUrl: 'http://localhost:8080/api' // TODO: Update to your production API URL (e.g., 'https://api.quickboxcourier.co.ke/api')
 };
 
