@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { FirebaseDataService } from '../../services/firebase-data.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-admin-quotes',
@@ -52,7 +52,7 @@ import { FirebaseDataService } from '../../services/firebase-data.service';
                 <div class="quote-meta">
                   <div>📧 {{ quote.email }}</div>
                   <div>📞 {{ quote.contactNumber }}</div>
-                  <div>📅 {{ quote.createdAt | date:'medium' }}</div>
+                  <div>📅 {{ formatDate(quote.createdAt) }}</div>
                 </div>
               </div>
               <div>
@@ -268,58 +268,67 @@ export class AdminQuotesComponent implements OnInit {
   pendingCount = 0;
 
   constructor(
-    private firebaseData: FirebaseDataService,
+    private dataService: DataService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    // Load initial quotes
     this.loadQuotes('PENDING');
+    
+    // Subscribe to quotes changes for real-time updates
+    this.dataService.getQuotes$().subscribe(quotes => {
+      if (this.filterStatus === 'ALL') {
+        this.quotes = quotes;
+      } else {
+        this.quotes = quotes.filter(q => q.status === this.filterStatus);
+      }
+      this.loadPendingCount();
+      this.loading = false;
+    });
   }
 
-  async loadQuotes(status: string): Promise<void> {
+  loadQuotes(status: string): void {
     this.loading = true;
     this.filterStatus = status;
     
-    try {
-      const quotes = await this.firebaseData.getQuotes(status === 'ALL' ? undefined : status);
-      this.quotes = quotes;
-      this.loadPendingCount();
-    } catch (err) {
-      console.error('Error loading quotes:', err);
-      this.quotes = [];
-    } finally {
-      this.loading = false;
-    }
+    this.dataService.getQuotes(status === 'ALL' ? undefined : status).subscribe({
+      next: (quotes) => {
+        console.log('Quotes loaded:', quotes);
+        this.quotes = quotes;
+        this.loadPendingCount();
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error loading quotes:', err);
+        alert('Error loading quotes: ' + (err.message || 'Unknown error'));
+        this.quotes = [];
+        this.loading = false;
+      }
+    });
   }
 
-  async loadPendingCount(): Promise<void> {
-    try {
-      const pending = await this.firebaseData.getQuotes('PENDING');
-      this.pendingCount = pending.length;
-    } catch {
-      this.pendingCount = 0;
-    }
+  loadPendingCount(): void {
+    this.pendingCount = this.dataService.getPendingQuotesCount();
   }
 
-  async updateStatus(id: string, status: string): Promise<void> {
-    try {
-      await this.firebaseData.updateQuoteStatus(id, status);
-      await this.loadQuotes(this.filterStatus);
-    } catch (err) {
+  updateStatus(id: string, status: string): void {
+    this.dataService.updateQuoteStatus(id, status).then(() => {
+      this.loadQuotes(this.filterStatus);
+    }).catch(err => {
       console.error('Error updating status:', err);
       alert('Failed to update status');
-    }
+    });
   }
 
-  async deleteQuote(id: string): Promise<void> {
+  deleteQuote(id: string): void {
     if (confirm('Are you sure you want to delete this quote?')) {
-      try {
-        await this.firebaseData.deleteQuote(id);
-        await this.loadQuotes(this.filterStatus);
-      } catch (err) {
+      this.dataService.deleteQuote(id).then(() => {
+        this.loadQuotes(this.filterStatus);
+      }).catch(err => {
         console.error('Error deleting quote:', err);
         alert('Failed to delete quote');
-      }
+      });
     }
   }
 
@@ -338,4 +347,22 @@ export class AdminQuotesComponent implements OnInit {
     }
   }
 
+  formatDate(date: any): string {
+    if (!date) return 'N/A';
+    if (date instanceof Date) {
+      return date.toLocaleString();
+    }
+    if (date.toDate && typeof date.toDate === 'function') {
+      // Firestore Timestamp
+      return date.toDate().toLocaleString();
+    }
+    if (typeof date === 'string') {
+      return new Date(date).toLocaleString();
+    }
+    if (date.seconds) {
+      // Firestore Timestamp object
+      return new Date(date.seconds * 1000).toLocaleString();
+    }
+    return 'N/A';
+  }
 }

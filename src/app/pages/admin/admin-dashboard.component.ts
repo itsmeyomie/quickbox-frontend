@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { FirebaseDataService } from '../../services/firebase-data.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -113,7 +113,7 @@ export class AdminDashboardComponent implements OnInit {
   currentUser: any = null;
 
   constructor(
-    private firebaseData: FirebaseDataService,
+    private dataService: DataService,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -125,12 +125,15 @@ export class AdminDashboardComponent implements OnInit {
     setInterval(() => this.loadKPIs(), 60000);
   }
 
-  async loadKPIs(): Promise<void> {
-    try {
-      this.kpis = await this.firebaseData.getAdminKPIs();
-    } catch (err) {
-      console.error('Error loading KPIs:', err);
-    }
+  loadKPIs(): void {
+    this.dataService.getAdminKPIs().subscribe({
+      next: (data) => {
+        this.kpis = data;
+      },
+      error: (err) => {
+        console.error('Error loading KPIs:', err);
+      }
+    });
   }
 
   refreshKPIs(): void {

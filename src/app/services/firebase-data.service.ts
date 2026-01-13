@@ -56,18 +56,65 @@ export class FirebaseDataService {
   }
 
   async getQuotes(status?: string): Promise<any[]> {
-    let q = query(collection(db, 'quotes'), orderBy('createdAt', 'desc'));
-    
-    if (status && status !== 'ALL') {
-      q = query(q, where('status', '==', status));
+    try {
+      let q;
+      
+      if (status && status !== 'ALL') {
+        // Query with status filter and orderBy
+        q = query(
+          collection(db, 'quotes'), 
+          where('status', '==', status),
+          orderBy('createdAt', 'desc')
+        );
+      } else {
+        // Query without status filter
+        q = query(collection(db, 'quotes'), orderBy('createdAt', 'desc'));
+      }
+      
+      const snapshot = await getDocs(q);
+      const quotes = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return { 
+          id: doc.id, 
+          ...data,
+          createdAt: data['createdAt']?.toDate ? data['createdAt'].toDate() : new Date()
+        };
+      });
+      
+      console.log(`Found ${quotes.length} quotes with status: ${status || 'ALL'}`);
+      return quotes;
+    } catch (error: any) {
+      // If index error, try without orderBy
+      if (error.code === 'failed-precondition' || error.message?.includes('index')) {
+        console.warn('Index error, trying without orderBy:', error.message);
+        try {
+          let q = query(collection(db, 'quotes'));
+          if (status && status !== 'ALL') {
+            q = query(q, where('status', '==', status));
+          }
+          const snapshot = await getDocs(q);
+          const quotes = snapshot.docs.map(doc => {
+            const data = doc.data();
+            return { 
+              id: doc.id, 
+              ...data,
+              createdAt: data['createdAt']?.toDate ? data['createdAt'].toDate() : new Date()
+            };
+          });
+          // Sort manually
+          quotes.sort((a, b) => {
+            const dateA = a.createdAt instanceof Date ? a.createdAt.getTime() : 0;
+            const dateB = b.createdAt instanceof Date ? b.createdAt.getTime() : 0;
+            return dateB - dateA;
+          });
+          return quotes;
+        } catch (fallbackError) {
+          console.error('Fallback query also failed:', fallbackError);
+          throw fallbackError;
+        }
+      }
+      throw error;
     }
-    
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ 
-      id: doc.id, 
-      ...doc.data(),
-      createdAt: doc.data()['createdAt']?.toDate() || new Date()
-    }));
   }
 
   async updateQuoteStatus(id: string, status: string): Promise<void> {
