@@ -71,7 +71,7 @@ import { PackageResponse } from '../models/package.model';
                         </div>
                         <div class="info-caption">
                             <p style="margin-bottom: 8px; font-weight: 600;">Dedicated Call Center</p>
-                            <span style="display: block; font-weight: 600; color: #f15f22; margin-bottom: 5px;">0118047315</span>
+                            <span style="display: block; font-weight: 600; color: #f15f22; margin-bottom: 5px;">+254118047315</span>
                             <span style="display: block; font-size: 14px; color: #666;">Call us anytime</span>
                         </div>
                     </div>

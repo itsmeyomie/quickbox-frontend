@@ -100,7 +100,7 @@ import { Contact } from '../models/contact.model';
                         <div class="media contact-info">
                             <span class="contact-info__icon"><i class="ti-tablet"></i></span>
                             <div class="media-body">
-                                <h3>0118047315</h3>
+                                <h3>+254118047315</h3>
                                 <p style="font-weight: 600; color: #f15f22; margin-bottom: 5px;">Dedicated Call Center</p>
                                 <p>Mon to Fri 8am to 8pm</p>
                             </div>
