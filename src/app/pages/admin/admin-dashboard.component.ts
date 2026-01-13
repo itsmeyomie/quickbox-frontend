@@ -45,12 +45,19 @@ import { environment } from '../../../environments/environment';
             <h3 style="color: #666; font-size: 14px; margin: 0 0 10px 0;">Riders Active</h3>
             <div style="font-size: 32px; font-weight: bold; color: #2196f3;">{{ kpis?.ridersActive || 0 }}</div>
           </div>
+          
+          <div class="kpi-card" style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h3 style="color: #666; font-size: 14px; margin: 0 0 10px 0;">Pending Quotes</h3>
+            <div style="font-size: 32px; font-weight: bold; color: #f15f22;">{{ kpis?.pendingQuotes || 0 }}</div>
+          </div>
         </div>
         
         <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
           <div style="display: flex; gap: 15px; margin-bottom: 20px;">
             <a [routerLink]="['/admin']" style="padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px;">Dashboard</a>
             <a [routerLink]="['/admin/users']" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px;">Users</a>
+            <a [routerLink]="['/admin/quotes']" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px;">Quotes</a>
+            <a [routerLink]="['/admin/video']" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px;">Video</a>
             <a [routerLink]="['/admin/reports']" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px;">Reports</a>
           </div>
           

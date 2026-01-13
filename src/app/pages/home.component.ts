@@ -30,7 +30,10 @@ import { PackageResponse } from '../models/package.model';
                                            [(ngModel)]="trackingId" name="trackingId" required>
                                 </div>
                                 <div class="search-form">
-                                    <button type="submit" [disabled]="isTracking">Track Package</button>
+                                    <button type="submit" [disabled]="isTracking" 
+                                            style="background: #f15f22; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; white-space: nowrap;">
+                                        Track Package
+                                    </button>
                                 </div>	
                             </form>	
                             <!-- Hero Pera -->
@@ -169,10 +172,14 @@ import { PackageResponse } from '../models/package.model';
                     <!-- about-img -->
                     <div class="about-img ">
                         <div class="about-font-img">
-                            <img src="/assets/img/gallery/about2.JPG" alt="QuickBox Delivery">
+                            <img [src]="'/assets/img/gallery/about2.jpg'" alt="QuickBox Delivery" 
+                                 (error)="onImageError($event, 'about2')"
+                                 style="max-width: 100%; height: auto;">
                         </div>
                         <div class="about-back-img d-none d-lg-block">
-                            <img src="/assets/img/gallery/about1.JPG" alt="QuickBox Services">
+                            <img [src]="'/assets/img/gallery/about1.jpg'" alt="QuickBox Services"
+                                 (error)="onImageError($event, 'about1')"
+                                 style="max-width: 100%; height: auto;">
                         </div>
                     </div>
                 </div>
@@ -449,6 +456,23 @@ import { PackageResponse } from '../models/package.model';
                     </div>
                 </div>
             </div>
+            <!-- Delivery Process Video -->
+            <div class="row mt-80">
+                <div class="col-lg-10 offset-lg-1">
+                    <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; text-align: center;">
+                        <h3 style="color: white; font-size: 28px; margin-bottom: 30px; font-weight: 600;">Watch Our Delivery Process</h3>
+                        <div style="background: #000; border-radius: 15px; overflow: hidden; max-width: 900px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+                            <video controls style="width: 100%; max-height: 600px; display: block;">
+                                <source src="/assets/videos/Quickbox Web.MP4" type="video/mp4">
+                                <source src="/assets/videos/Quickbox Web.mp4" type="video/mp4">
+                                <source src="/assets/videos/delivery-process.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Quick Track Form -->
             <div class="row mt-80">
                 <div class="col-lg-8 offset-lg-2">
@@ -491,20 +515,18 @@ import { PackageResponse } from '../models/package.model';
             <div class="row" style="margin: 0 -15px; margin-bottom: 60px;">
                 <div class="col-lg-12">
                     <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 20px; padding: 60px 40px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
-                        <!-- Map Placeholder - Replace with actual map or AI-generated Nairobi map -->
-                        <div style="background: #ffffff; border-radius: 15px; padding: 40px; text-align: center; min-height: 400px; display: flex; align-items: center; justify-content: center; border: 3px dashed #f15f22;">
-                            <img src="/assets/img/gallery/nairobi-coverage-map.jpg" alt="Nairobi Coverage Map" 
-                                 style="width: 100%; max-width: 800px; height: auto; border-radius: 10px;"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div style="display: none; flex-direction: column; align-items: center; gap: 20px;">
-                                <div style="width: 200px; height: 200px; background: linear-gradient(135deg, #f15f22 0%, #ff8c42 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                                    <span class="flaticon-place" style="font-size: 100px; color: white;"></span>
-                                </div>
-                                <div style="text-align: center;">
-                                    <h3 style="color: #333; font-size: 24px; margin-bottom: 10px;">Nairobi Coverage Map</h3>
-                                    <p style="color: #666; font-size: 16px; margin: 0;">Add your Nairobi coverage map image here<br>(Recommended: 800px × 400px)</p>
-                                </div>
-                            </div>
+                        <!-- Real-time Google Maps Embed -->
+                        <div style="background: #ffffff; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); min-height: 500px;">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63820.992869414!2d36.821946!3d-1.292066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1172d84d49a7%3A0xf7cf0254b297924c!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2sus!4v1704067200000!5m2!1sen!2sus"
+                                width="100%" 
+                                height="500" 
+                                style="border:0; display: block;" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"
+                                title="Nairobi Coverage Map">
+                            </iframe>
                         </div>
                     </div>
                 </div>
@@ -599,6 +621,16 @@ export class HomeComponent {
   quoteErrorMessage = '';
 
   constructor(private apiService: ApiService) {}
+  
+  onImageError(event: any, imageName: string): void {
+    console.error(`Failed to load image: ${imageName}.jpg`);
+    // Try alternative paths
+    if (imageName === 'about1') {
+      event.target.src = '/assets/img/gallery/about1.JPG';
+    } else if (imageName === 'about2') {
+      event.target.src = '/assets/img/gallery/about2.JPG';
+    }
+  }
 
   trackPackage() {
     if (!this.trackingId || this.isTracking) return;

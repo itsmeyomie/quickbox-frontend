@@ -48,10 +48,14 @@ import { RouterLink } from '@angular/router';
                         <!-- about-img -->
                         <div class="about-img ">
                             <div class="about-font-img">
-                                <img src="/assets/img/gallery/about2.JPG" alt="QuickBox Delivery">
+                                <img [src]="'/assets/img/gallery/about2.jpg'" alt="QuickBox Delivery"
+                                     (error)="onImageError($event, 'about2')"
+                                     style="max-width: 100%; height: auto;">
                             </div>
                             <div class="about-back-img d-none d-lg-block">
-                                <img src="/assets/img/gallery/about1.JPG" alt="QuickBox Services">
+                                <img [src]="'/assets/img/gallery/about1.jpg'" alt="QuickBox Services"
+                                     (error)="onImageError($event, 'about1')"
+                                     style="max-width: 100%; height: auto;">
                             </div>
                         </div>
                     </div>
@@ -67,5 +71,15 @@ import { RouterLink } from '@angular/router';
     </div>
       `
 })
-export class AboutComponent {}
+export class AboutComponent {
+  onImageError(event: any, imageName: string): void {
+    console.error(`Failed to load image: ${imageName}.jpg`);
+    // Try alternative paths
+    if (imageName === 'about1') {
+      event.target.src = '/assets/img/gallery/about1.JPG';
+    } else if (imageName === 'about2') {
+      event.target.src = '/assets/img/gallery/about2.JPG';
+    }
+  }
+}
 
