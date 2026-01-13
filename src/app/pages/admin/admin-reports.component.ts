@@ -3,82 +3,137 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-reports',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   template: `
-    <div style="min-height: 100vh; background: #f5f5f5; padding: 20px;">
-      <div style="max-width: 1200px; margin: 0 auto;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-          <h1 style="color: #333;">Reports</h1>
-          <div>
-            <span style="margin-right: 15px;">{{ currentUser?.fullName || currentUser?.email }}</span>
-            <button (click)="logout()" style="padding: 8px 16px; background: #d32f2f; color: white; border: none; border-radius: 5px; cursor: pointer;">Logout</button>
-          </div>
+    <div class="admin-page">
+      <div class="page-header">
+        <div class="filters">
+          <input type="date" [(ngModel)]="fromDate" class="filter-input">
+          <input type="date" [(ngModel)]="toDate" class="filter-input">
+          <select [(ngModel)]="reportType" class="filter-select">
+            <option value="orders">Orders Report</option>
+            <option value="cod">COD Report</option>
+          </select>
+          <button (click)="loadReport()" class="btn-generate">Generate</button>
         </div>
-        
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
-          <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-            <a [routerLink]="['/admin']" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px;">Dashboard</a>
-            <a [routerLink]="['/admin/users']" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px;">Users</a>
-            <a [routerLink]="['/admin/reports']" style="padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px;">Reports</a>
-          </div>
-          
-          <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-            <input type="date" [(ngModel)]="fromDate" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
-            <input type="date" [(ngModel)]="toDate" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
-            <select [(ngModel)]="reportType" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
-              <option value="orders">Orders Report</option>
-              <option value="cod">COD Report</option>
-            </select>
-            <button (click)="loadReport()" style="padding: 8px 16px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">Generate</button>
-          </div>
+      </div>
+      
+      <div class="content-card">
+        <h3 class="card-title">{{ reportType === 'orders' ? 'Orders' : 'COD' }} Report</h3>
+        <div *ngIf="reportData && reportData.length > 0">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th *ngFor="let header of getTableHeaders()">{{ header }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of reportData">
+                <td *ngFor="let header of getTableHeaders()">{{ getFieldValue(item, header) }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-          <h3 style="margin-bottom: 15px;">{{ reportType === 'orders' ? 'Orders' : 'COD' }} Report</h3>
-          <div *ngIf="reportData && reportData.length > 0">
-            <table style="width: 100%; border-collapse: collapse;">
-              <thead>
-                <tr style="border-bottom: 2px solid #ddd;">
-                  <th *ngFor="let header of getTableHeaders()" style="padding: 12px; text-align: left;">{{ header }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of reportData" style="border-bottom: 1px solid #eee;">
-                  <td *ngFor="let header of getTableHeaders()" style="padding: 12px;">{{ getFieldValue(item, header) }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div *ngIf="!reportData || reportData.length === 0" style="text-align: center; padding: 40px; color: #999;">
-            No data available. Select filters and click Generate.
-          </div>
+        <div *ngIf="!reportData || reportData.length === 0" class="empty-state">
+          No data available. Select filters and click Generate.
         </div>
       </div>
     </div>
-  `
+  `,
+  styles: [`
+    .admin-page {
+      padding: 0;
+    }
+    
+    .page-header {
+      margin-bottom: 20px;
+    }
+    
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .filter-input, .filter-select {
+      padding: 8px 12px;
+      border: 1px solid #E1E1E1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    
+    .btn-generate {
+      padding: 8px 16px;
+      background: #f15f22;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .content-card {
+      background: #FFFFFF;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .card-title {
+      margin: 0 0 15px 0;
+      color: #050F24;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .data-table th {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 2px solid #E1E1E1;
+      color: #050F24;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .data-table td {
+      padding: 12px;
+      border-bottom: 1px solid #F5F5F5;
+      color: #050F24;
+      font-size: 14px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #6F757E;
+    }
+  `]
 })
 export class AdminReportsComponent implements OnInit {
   reportType: string = 'orders';
   fromDate: string = '';
   toDate: string = '';
   reportData: any[] = [];
-  currentUser: any = null;
   private apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
     const today = new Date();
     this.toDate = today.toISOString().split('T')[0];
     const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
@@ -126,8 +181,5 @@ export class AdminReportsComponent implements OnInit {
     return mapping[header] || 'N/A';
   }
 
-  logout(): void {
-    this.authService.logout();
-  }
 }
 

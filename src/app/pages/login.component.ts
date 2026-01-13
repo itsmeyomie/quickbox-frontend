@@ -86,7 +86,7 @@ export class LoginComponent {
       },
       error: (err) => {
         this.loading = false;
-        this.error = err.error?.message || 'Invalid credentials. Please try again.';
+        this.error = err.message || 'Invalid credentials. Please try again.';
       }
     });
   }

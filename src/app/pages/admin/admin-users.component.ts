@@ -9,205 +9,398 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-admin-users',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   template: `
-    <div style="min-height: 100vh; background: #f5f5f5; padding: 20px;">
-      <div style="max-width: 1200px; margin: 0 auto;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-          <h1 style="color: #333;">User Management</h1>
-          <div>
-            <span style="margin-right: 15px;">{{ currentUser?.fullName || currentUser?.email }}</span>
-            <button (click)="logout()" style="padding: 8px 16px; background: #d32f2f; color: white; border: none; border-radius: 5px; cursor: pointer;">Logout</button>
-          </div>
+    <div class="admin-page">
+      <div class="page-header">
+        <div class="filters">
+          <select [(ngModel)]="selectedRole" (change)="loadUsers()" class="filter-select">
+            <option value="">All Roles</option>
+            <option value="ADMIN">Admin</option>
+            <option value="DISPATCHER">Dispatcher</option>
+            <option value="RIDER">Rider</option>
+            <option value="CLIENT">Client</option>
+          </select>
+          <button (click)="showAddUser = true" class="add-btn">Add User</button>
         </div>
+      </div>
         
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
-          <div style="display: flex; gap: 15px; margin-bottom: 20px;">
-            <a [routerLink]="['/admin']" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px;">Dashboard</a>
-            <a [routerLink]="['/admin/users']" style="padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px;">Users</a>
-            <a [routerLink]="['/admin/reports']" style="padding: 10px 20px; background: #e0e0e0; color: #333; text-decoration: none; border-radius: 5px;">Reports</a>
-          </div>
-          
-          <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-            <select [(ngModel)]="selectedRole" (change)="loadUsers()" style="padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
-              <option value="">All Roles</option>
-              <option value="ADMIN">Admin</option>
-              <option value="DISPATCHER">Dispatcher</option>
-              <option value="RIDER">Rider</option>
-              <option value="CLIENT">Client</option>
-            </select>
-            <button (click)="showAddUser = true" style="padding: 8px 16px; background: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">Add User</button>
-          </div>
+      <div class="content-card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.fullName || 'N/A' }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <span class="status-badge" [class.active]="user.active" [class.inactive]="!user.active">
+                  {{ user.active ? 'Active' : 'Disabled' }}
+                </span>
+              </td>
+              <td>
+                <button (click)="editUser(user)" class="btn-edit">Edit</button>
+                <button (click)="disableUser(user.id)" *ngIf="user.active" class="btn-disable">Disable</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        
+      <!-- Add User Modal -->
+      <div *ngIf="showAddUser" class="modal-overlay">
+        <div class="modal-content">
+          <h3 class="modal-title">Add New User</h3>
+          <form (ngSubmit)="createUser()" #userForm="ngForm">
+            <div class="form-group">
+              <label>Full Name:</label>
+              <input type="text" [(ngModel)]="newUser.fullName" name="fullName" required class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Email:</label>
+              <input type="email" [(ngModel)]="newUser.email" name="email" required class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Phone (optional):</label>
+              <input type="text" [(ngModel)]="newUser.phone" name="phone" class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Password:</label>
+              <input type="password" [(ngModel)]="newUser.password" name="password" required class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Role:</label>
+              <select [(ngModel)]="newUser.role" name="role" required class="form-input">
+                <option value="">-- Select Role --</option>
+                <option value="ADMIN">Admin</option>
+                <option value="DISPATCHER">Dispatcher</option>
+                <option value="RIDER">Rider</option>
+                <option value="CLIENT">Client</option>
+              </select>
+            </div>
+            
+            <div class="form-group" *ngIf="newUser.role === 'RIDER'">
+              <label>Zone:</label>
+              <input type="text" [(ngModel)]="newUser.zone" name="zone" class="form-input">
+            </div>
+            
+            <div class="form-group" *ngIf="newUser.role === 'RIDER'">
+              <label>Vehicle:</label>
+              <input type="text" [(ngModel)]="newUser.vehicle" name="vehicle" class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Branch (optional):</label>
+              <input type="text" [(ngModel)]="newUser.branch" name="branch" class="form-input">
+            </div>
+            
+            <div *ngIf="errorMessage" class="error-message">
+              {{ errorMessage }}
+            </div>
+            
+            <div class="modal-actions">
+              <button type="button" (click)="closeAddUserModal()" class="btn-cancel">Cancel</button>
+              <button type="submit" [disabled]="!userForm.valid || creating" class="btn-submit">
+                {{ creating ? 'Creating...' : 'Create User' }}
+              </button>
+            </div>
+          </form>
         </div>
-        
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-          <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-              <tr style="border-bottom: 2px solid #ddd;">
-                <th style="padding: 12px; text-align: left;">Name</th>
-                <th style="padding: 12px; text-align: left;">Email</th>
-                <th style="padding: 12px; text-align: left;">Role</th>
-                <th style="padding: 12px; text-align: left;">Status</th>
-                <th style="padding: 12px; text-align: left;">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let user of users" style="border-bottom: 1px solid #eee;">
-                <td style="padding: 12px;">{{ user.fullName || 'N/A' }}</td>
-                <td style="padding: 12px;">{{ user.email }}</td>
-                <td style="padding: 12px;">{{ user.role }}</td>
-                <td style="padding: 12px;">
-                  <span [style.color]="user.active ? '#4caf50' : '#f44336'">
-                    {{ user.active ? 'Active' : 'Disabled' }}
-                  </span>
-                </td>
-                <td style="padding: 12px;">
-                  <button (click)="editUser(user)" style="padding: 5px 10px; background: #2196f3; color: white; border: none; border-radius: 3px; cursor: pointer; margin-right: 5px;">Edit</button>
-                  <button (click)="disableUser(user.id)" *ngIf="user.active" style="padding: 5px 10px; background: #f44336; color: white; border: none; border-radius: 3px; cursor: pointer;">Disable</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <!-- Add User Modal -->
-        <div *ngIf="showAddUser" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-          <div style="background: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
-            <h3 style="margin-bottom: 20px;">Add New User</h3>
-            <form (ngSubmit)="createUser()" #userForm="ngForm">
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Full Name:</label>
-                <input type="text" [(ngModel)]="newUser.fullName" name="fullName" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Email:</label>
-                <input type="email" [(ngModel)]="newUser.email" name="email" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Phone (optional):</label>
-                <input type="text" [(ngModel)]="newUser.phone" name="phone" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Password:</label>
-                <input type="password" [(ngModel)]="newUser.password" name="password" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Role:</label>
-                <select [(ngModel)]="newUser.role" name="role" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                  <option value="">-- Select Role --</option>
-                  <option value="ADMIN">Admin</option>
-                  <option value="DISPATCHER">Dispatcher</option>
-                  <option value="RIDER">Rider</option>
-                  <option value="CLIENT">Client</option>
-                </select>
-              </div>
-              
-              <div style="margin-bottom: 15px;" *ngIf="newUser.role === 'RIDER'">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Zone:</label>
-                <input type="text" [(ngModel)]="newUser.zone" name="zone" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;" *ngIf="newUser.role === 'RIDER'">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Vehicle:</label>
-                <input type="text" [(ngModel)]="newUser.vehicle" name="vehicle" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Branch (optional):</label>
-                <input type="text" [(ngModel)]="newUser.branch" name="branch" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div *ngIf="errorMessage" style="color: #d32f2f; margin-bottom: 15px; font-size: 14px;">
-                {{ errorMessage }}
-              </div>
-              
-              <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                <button type="button" (click)="closeAddUserModal()" style="padding: 10px 20px; background: #ccc; color: #333; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
-                <button type="submit" [disabled]="!userForm.valid || creating" style="padding: 10px 20px; background: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                  {{ creating ? 'Creating...' : 'Create User' }}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-        
-        <!-- Edit User Modal -->
-        <div *ngIf="showEditUser" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
-          <div style="background: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
-            <h3 style="margin-bottom: 20px;">Edit User</h3>
-            <form (ngSubmit)="updateUser()" #editForm="ngForm">
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Full Name:</label>
-                <input type="text" [(ngModel)]="editUserData.fullName" name="editFullName" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Email:</label>
-                <input type="email" [(ngModel)]="editUserData.email" name="editEmail" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Phone (optional):</label>
-                <input type="text" [(ngModel)]="editUserData.phone" name="editPhone" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">New Password (leave blank to keep current):</label>
-                <input type="password" [(ngModel)]="editUserData.password" name="editPassword" placeholder="Leave blank to keep current password" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Role:</label>
-                <select [(ngModel)]="editUserData.role" name="editRole" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                  <option value="ADMIN">Admin</option>
-                  <option value="DISPATCHER">Dispatcher</option>
-                  <option value="RIDER">Rider</option>
-                  <option value="CLIENT">Client</option>
-                </select>
-              </div>
-              
-              <div style="margin-bottom: 15px;" *ngIf="editUserData.role === 'RIDER'">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Zone:</label>
-                <input type="text" [(ngModel)]="editUserData.zone" name="editZone" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;" *ngIf="editUserData.role === 'RIDER'">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Vehicle:</label>
-                <input type="text" [(ngModel)]="editUserData.vehicle" name="editVehicle" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Branch (optional):</label>
-                <input type="text" [(ngModel)]="editUserData.branch" name="editBranch" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-              </div>
-              
-              <div style="margin-bottom: 15px;">
-                <label style="display: flex; align-items: center; gap: 10px;">
-                  <input type="checkbox" [(ngModel)]="editUserData.active" name="editActive" style="width: auto;">
-                  <span>Active</span>
-                </label>
-              </div>
-              
-              <div *ngIf="errorMessage" style="color: #d32f2f; margin-bottom: 15px; font-size: 14px;">
-                {{ errorMessage }}
-              </div>
-              
-              <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                <button type="button" (click)="closeEditUserModal()" style="padding: 10px 20px; background: #ccc; color: #333; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
-                <button type="submit" [disabled]="!editForm.valid || updating" style="padding: 10px 20px; background: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                  {{ updating ? 'Updating...' : 'Update User' }}
-                </button>
-              </div>
-            </form>
-          </div>
+      </div>
+      
+      <!-- Edit User Modal -->
+      <div *ngIf="showEditUser" class="modal-overlay">
+        <div class="modal-content">
+          <h3 class="modal-title">Edit User</h3>
+          <form (ngSubmit)="updateUser()" #editForm="ngForm">
+            <div class="form-group">
+              <label>Full Name:</label>
+              <input type="text" [(ngModel)]="editUserData.fullName" name="editFullName" required class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Email:</label>
+              <input type="email" [(ngModel)]="editUserData.email" name="editEmail" required class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Phone (optional):</label>
+              <input type="text" [(ngModel)]="editUserData.phone" name="editPhone" class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>New Password (leave blank to keep current):</label>
+              <input type="password" [(ngModel)]="editUserData.password" name="editPassword" placeholder="Leave blank to keep current password" class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Role:</label>
+              <select [(ngModel)]="editUserData.role" name="editRole" required class="form-input">
+                <option value="ADMIN">Admin</option>
+                <option value="DISPATCHER">Dispatcher</option>
+                <option value="RIDER">Rider</option>
+                <option value="CLIENT">Client</option>
+              </select>
+            </div>
+            
+            <div class="form-group" *ngIf="editUserData.role === 'RIDER'">
+              <label>Zone:</label>
+              <input type="text" [(ngModel)]="editUserData.zone" name="editZone" class="form-input">
+            </div>
+            
+            <div class="form-group" *ngIf="editUserData.role === 'RIDER'">
+              <label>Vehicle:</label>
+              <input type="text" [(ngModel)]="editUserData.vehicle" name="editVehicle" class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label>Branch (optional):</label>
+              <input type="text" [(ngModel)]="editUserData.branch" name="editBranch" class="form-input">
+            </div>
+            
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" [(ngModel)]="editUserData.active" name="editActive">
+                <span>Active</span>
+              </label>
+            </div>
+            
+            <div *ngIf="errorMessage" class="error-message">
+              {{ errorMessage }}
+            </div>
+            
+            <div class="modal-actions">
+              <button type="button" (click)="closeEditUserModal()" class="btn-cancel">Cancel</button>
+              <button type="submit" [disabled]="!editForm.valid || updating" class="btn-update">
+                {{ updating ? 'Updating...' : 'Update User' }}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
-  `
+  `,
+  styles: [`
+    .admin-page {
+      padding: 0;
+    }
+    
+    .page-header {
+      margin-bottom: 20px;
+    }
+    
+    .filters {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .filter-select {
+      padding: 8px 12px;
+      border: 1px solid #E1E1E1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    
+    .add-btn {
+      padding: 8px 16px;
+      background: #f15f22;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    
+    .add-btn:hover {
+      background: #d14a1a;
+    }
+    
+    .content-card {
+      background: #FFFFFF;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .data-table th {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 2px solid #E1E1E1;
+      color: #050F24;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .data-table td {
+      padding: 12px;
+      border-bottom: 1px solid #F5F5F5;
+      color: #050F24;
+      font-size: 14px;
+    }
+    
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .status-badge.active {
+      background: #E8F5E9;
+      color: #4caf50;
+    }
+    
+    .status-badge.inactive {
+      background: #FFEBEE;
+      color: #f44336;
+    }
+    
+    .btn-edit {
+      padding: 6px 12px;
+      background: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 5px;
+      font-size: 12px;
+    }
+    
+    .btn-disable {
+      padding: 6px 12px;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-title {
+      margin: 0 0 20px 0;
+      color: #050F24;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #050F24;
+      font-size: 14px;
+    }
+    
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #E1E1E1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    
+    .form-input:focus {
+      border-color: #f15f22;
+    }
+    
+    .error-message {
+      color: #F54F5F;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+    
+    .btn-cancel {
+      padding: 10px 20px;
+      background: #E1E1E1;
+      color: #050F24;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .btn-submit {
+      padding: 10px 20px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .btn-update {
+      padding: 10px 20px;
+      background: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+  `]
 })
 export class AdminUsersComponent implements OnInit {
   users: any[] = [];
@@ -379,8 +572,5 @@ export class AdminUsersComponent implements OnInit {
     }
   }
 
-  logout(): void {
-    this.authService.logout();
-  }
 }
 

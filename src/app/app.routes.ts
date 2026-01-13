@@ -30,27 +30,29 @@ export const routes: Routes = [
   { 
     path: 'admin', 
     canActivate: [roleGuard(['ADMIN'])],
-    loadComponent: () => import('./pages/admin/admin-dashboard.component').then(m => m.AdminDashboardComponent)
-  },
-  { 
-    path: 'admin/users', 
-    canActivate: [roleGuard(['ADMIN'])],
-    loadComponent: () => import('./pages/admin/admin-users.component').then(m => m.AdminUsersComponent)
-  },
-  { 
-    path: 'admin/quotes', 
-    canActivate: [roleGuard(['ADMIN'])],
-    loadComponent: () => import('./pages/admin/admin-quotes.component').then(m => m.AdminQuotesComponent)
-  },
-  { 
-    path: 'admin/video', 
-    canActivate: [roleGuard(['ADMIN'])],
-    loadComponent: () => import('./pages/admin/admin-video.component').then(m => m.AdminVideoComponent)
-  },
-  { 
-    path: 'admin/reports', 
-    canActivate: [roleGuard(['ADMIN'])],
-    loadComponent: () => import('./pages/admin/admin-reports.component').then(m => m.AdminReportsComponent)
+    loadComponent: () => import('./layout/admin-layout.component').then(m => m.AdminLayoutComponent),
+    children: [
+      { 
+        path: '', 
+        loadComponent: () => import('./pages/admin/admin-dashboard.component').then(m => m.AdminDashboardComponent)
+      },
+      { 
+        path: 'users', 
+        loadComponent: () => import('./pages/admin/admin-users.component').then(m => m.AdminUsersComponent)
+      },
+      { 
+        path: 'quotes', 
+        loadComponent: () => import('./pages/admin/admin-quotes.component').then(m => m.AdminQuotesComponent)
+      },
+      { 
+        path: 'video', 
+        loadComponent: () => import('./pages/admin/admin-video.component').then(m => m.AdminVideoComponent)
+      },
+      { 
+        path: 'reports', 
+        loadComponent: () => import('./pages/admin/admin-reports.component').then(m => m.AdminReportsComponent)
+      }
+    ]
   },
   { 
     path: 'dispatch', 
