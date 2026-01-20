@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { LoginDiagnosticService } from '../services/login-diagnostic.service';
 
 @Component({
   selector: 'app-login',
@@ -66,7 +67,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private diagnostic: LoginDiagnosticService
   ) {}
 
   onSubmit(): void {
@@ -75,18 +77,26 @@ export class LoginComponent {
     this.loading = true;
     this.error = '';
 
+    // Run diagnostic in background (for debugging)
+    this.diagnostic.runDiagnostic(this.emailOrPhone, this.password).catch(err => {
+      console.error('Diagnostic error:', err);
+    });
+
     this.authService.login({
       emailOrPhone: this.emailOrPhone,
       password: this.password
     }).subscribe({
       next: (response) => {
         this.loading = false;
+        console.log('Login successful, redirecting to:', this.authService.getRoleRoute());
         const route = this.authService.getRoleRoute();
         this.router.navigate([route]);
       },
       error: (err) => {
         this.loading = false;
+        console.error('Login error:', err);
         this.error = err.message || 'Invalid credentials. Please try again.';
+        console.log('Check browser console for detailed diagnostic information');
       }
     });
   }

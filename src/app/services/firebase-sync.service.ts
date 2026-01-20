@@ -87,21 +87,47 @@ export class FirebaseSyncService {
    */
   private async syncQuotesFromFirebase(): Promise<void> {
     try {
+      console.log('🔄 Starting quotes sync from Firebase...');
       const snapshot = await getDocs(collection(db, 'quotes'));
+      console.log(`📦 Retrieved ${snapshot.docs.length} quote documents from Firebase`);
+      
       const quotes: Quote[] = snapshot.docs.map(doc => {
         const data = doc.data();
-        return {
+        const quote: Quote = {
           id: doc.id,
-          ...data,
-          createdAt: data['createdAt']?.toDate ? data['createdAt'].toDate() : new Date(),
-          updatedAt: data['updatedAt']?.toDate ? data['updatedAt'].toDate() : undefined
-        } as Quote;
+          name: data['name'] || '',
+          email: data['email'] || '',
+          contactNumber: data['contactNumber'] || data['phone'] || '',
+          serviceType: data['serviceType'] || '',
+          pickupLocation: data['pickupLocation'] || '',
+          deliveryDestination: data['deliveryDestination'] || '',
+          packageWeight: data['packageWeight'] || '',
+          additionalServices: data['additionalServices'] || '',
+          status: (data['status'] || 'PENDING') as Quote['status'],
+          createdAt: data['createdAt']?.toDate ? data['createdAt'].toDate() : 
+                    (data['createdAt'] ? new Date(data['createdAt']) : new Date()),
+          updatedAt: data['updatedAt']?.toDate ? data['updatedAt'].toDate() : 
+                    (data['updatedAt'] ? new Date(data['updatedAt']) : undefined)
+        };
+        return quote;
       });
       
+      console.log(`✅ Processed ${quotes.length} quotes, loading into store...`);
       this.quotesStore.load(quotes, true);
-      console.log(`Synced ${quotes.length} quotes from Firebase`);
-    } catch (error) {
-      console.error('Error syncing quotes from Firebase:', error);
+      console.log(`✅ Successfully synced ${quotes.length} quotes from Firebase to store`);
+      console.log('📋 Sample quote:', quotes.length > 0 ? {
+        id: quotes[0].id,
+        name: quotes[0].name,
+        email: quotes[0].email,
+        status: quotes[0].status
+      } : 'No quotes');
+    } catch (error: any) {
+      console.error('❌ Error syncing quotes from Firebase:', error);
+      console.error('Error details:', {
+        code: error.code,
+        message: error.message,
+        stack: error.stack
+      });
       throw error;
     }
   }
@@ -309,12 +335,34 @@ export class FirebaseSyncService {
     }
 
     try {
-      const contactRef = doc(collection(db, 'contacts'));
-      const { id, ...data } = contact;
-      await setDoc(contactRef, {
-        ...data,
-        createdAt: serverTimestamp()
-      });
+      if (contact.id) {
+        // Contact already has an ID, update existing document
+        const contactRef = doc(db, 'contacts', contact.id);
+        const { id, ...data } = contact;
+        await setDoc(contactRef, {
+          ...data,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        console.log(`Contact ${contact.id} synced to Firebase`);
+      } else {
+        // New contact, create document and get Firebase ID
+        const contactRef = doc(collection(db, 'contacts'));
+        const { id, ...data } = contact;
+        await setDoc(contactRef, {
+          ...data,
+          createdAt: serverTimestamp()
+        });
+        // Update local store with Firebase-generated ID
+        const localContact = this.contactsStore.getAll().find(c => 
+          c.name === contact.name && 
+          c.email === contact.email && 
+          !c.id
+        );
+        if (localContact) {
+          this.contactsStore.update(localContact.id!, { id: contactRef.id });
+          console.log(`Contact synced to Firebase with ID: ${contactRef.id}`);
+        }
+      }
     } catch (error) {
       console.error('Error persisting contact to Firebase:', error);
       this.addToOfflineQueue('contacts', 'create', contact);

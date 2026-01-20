@@ -6,6 +6,7 @@ import { OrdersStoreService, Order } from './stores/orders-store.service';
 import { UsersStoreService, User } from './stores/users-store.service';
 import { ContactsStoreService, Contact } from './stores/contacts-store.service';
 import { FirebaseSyncService } from './firebase-sync.service';
+import { EmailService } from './email.service';
 import { ContactResponse, ContactData } from '../models/contact.model';
 import { QuoteRequest, QuoteResponse, QuoteData } from '../models/quote.model';
 import { PackageResponse, PackageData } from '../models/package.model';
@@ -24,14 +25,15 @@ export class DataService {
     private ordersStore: OrdersStoreService,
     private usersStore: UsersStoreService,
     private contactsStore: ContactsStoreService,
-    private syncService: FirebaseSyncService
+    private syncService: FirebaseSyncService,
+    private emailService: EmailService
   ) {}
 
   // ============ CONTACTS ============
 
   /**
    * Submit contact form
-   * Stores in memory first, then syncs to Firebase in background
+   * Stores in memory first, then syncs to Firebase and sends email simultaneously
    */
   submitContact(contact: any): Observable<ContactResponse> {
     const saved = this.contactsStore.add({
@@ -43,6 +45,17 @@ export class DataService {
     // Persist to Firebase in background (non-blocking)
     this.syncService.persistContact(saved).catch(err => {
       console.error('Background sync failed for contact:', err);
+    });
+
+    // Send email simultaneously (non-blocking)
+    this.emailService.sendContactEmail({
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
+      subject: contact.subject,
+      message: contact.message
+    }).catch(err => {
+      console.error('Failed to send contact email:', err);
     });
 
     const contactData: ContactData = {
@@ -77,11 +90,24 @@ export class DataService {
     return of(this.contactsStore.getUnread());
   }
 
+  /**
+   * Mark contact as read
+   */
+  async markContactRead(contactId: string): Promise<void> {
+    const updated = this.contactsStore.markAsRead(contactId);
+    if (updated) {
+      // Sync to Firebase in background
+      this.syncService.persistContact(updated).catch(err => {
+        console.error('Background sync failed for contact update:', err);
+      });
+    }
+  }
+
   // ============ QUOTES ============
 
   /**
    * Submit quote request
-   * Stores in memory first, then syncs to Firebase in background
+   * Stores in memory first, then syncs to Firebase and sends email simultaneously
    */
   submitQuoteRequest(quote: QuoteRequest): Observable<QuoteResponse> {
     const saved = this.quotesStore.add({
@@ -97,6 +123,20 @@ export class DataService {
       console.log('Quote synced to Firebase successfully');
     }).catch(err => {
       console.error('Background sync failed for quote:', err);
+    });
+
+    // Send email simultaneously (non-blocking)
+    this.emailService.sendQuoteEmail({
+      name: quote.name,
+      email: quote.email,
+      contactNumber: quote.contactNumber,
+      serviceType: quote.serviceType,
+      pickupLocation: quote.pickupLocation,
+      deliveryDestination: quote.deliveryDestination,
+      packageWeight: quote.packageWeight,
+      additionalServices: quote.additionalServices
+    }).catch(err => {
+      console.error('Failed to send quote email:', err);
     });
 
     const quoteData: QuoteData = {
@@ -526,5 +566,12 @@ export class DataService {
    */
   getUsers$(): Observable<User[]> {
     return this.usersStore.data$;
+  }
+
+  /**
+   * Get contacts as observable (reactive)
+   */
+  getContacts$(): Observable<Contact[]> {
+    return this.contactsStore.data$;
   }
 }

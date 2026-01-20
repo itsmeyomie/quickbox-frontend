@@ -25,7 +25,15 @@ export const roleGuard: (allowedRoles: string[]) => CanActivateFn = (allowedRole
     }
 
     const user = authService.getCurrentUser();
-    if (user && !allowedRoles.includes(user.role)) {
+    if (!user) {
+      console.warn('User data not loaded yet');
+      router.navigate(['/login']);
+      return false;
+    }
+
+    const userRole = user.role || user.user?.role;
+    if (!userRole || !allowedRoles.includes(userRole)) {
+      console.warn(`User role ${userRole} not in allowed roles:`, allowedRoles);
       router.navigate(['/login']);
       return false;
     }

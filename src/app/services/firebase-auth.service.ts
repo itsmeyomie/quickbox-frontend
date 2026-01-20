@@ -51,21 +51,32 @@ export class FirebaseAuthService {
 
   async login(emailOrPhone: string, password: string): Promise<LoginResponse> {
     try {
+      console.log('Attempting login with:', emailOrPhone);
+      
       // Try email first, then check if it's a phone number
       let email = emailOrPhone;
       
       // If it's a phone number, we need to find the user by phone in Firestore
       // For now, assuming email login
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log('Firebase Authentication successful, UID:', userCredential.user.uid);
+      
       const userData = await this.getUserData(userCredential.user.uid);
       
       if (!userData) {
-        throw new Error('User data not found. Please contact administrator.');
+        console.error('User data not found in Firestore for UID:', userCredential.user.uid);
+        throw new Error('User data not found. Please create user document in Firestore. See CREATE_ADMIN_USER.md');
       }
       
       if (userData.active === false) {
         throw new Error('User account is disabled');
       }
+
+      if (!userData.role) {
+        throw new Error('User role not set. Please set role in Firestore user document.');
+      }
+
+      console.log('Login successful, user role:', userData.role);
 
       // Generate a simple token (Firebase handles auth tokens internally)
       const token = await userCredential.user.getIdToken();

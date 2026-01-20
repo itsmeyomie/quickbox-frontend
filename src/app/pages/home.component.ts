@@ -412,13 +412,6 @@ import { PackageResponse } from '../models/package.model';
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">1</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">Book Your Delivery</h3>
                         <p style="color: rgba(255,255,255,0.9); line-height: 1.8; font-size: 16px; margin: 0;">Create an order online or call us. Provide pickup and delivery addresses, and we'll handle the rest.</p>
-                        <!-- Image placeholder - Replace with your image -->
-                        <div style="margin-top: 30px; border-radius: 15px; overflow: hidden; background: rgba(255,255,255,0.1); min-height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <img src="/assets/img/gallery/delivery-step1.jpg" alt="Book Delivery" style="width: 100%; height: 200px; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div style="display: none; width: 100%; height: 200px; align-items: center; justify-content: center; color: rgba(255,255,255,0.7);">
-                                <span class="flaticon-shipped" style="font-size: 80px;"></span>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 40px;">
@@ -429,13 +422,6 @@ import { PackageResponse } from '../models/package.model';
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">2</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">We Pick & Track</h3>
                         <p style="color: rgba(255,255,255,0.9); line-height: 1.8; font-size: 16px; margin: 0;">Our rider picks up your package and you can track its journey in real-time through our tracking system.</p>
-                        <!-- Image placeholder - Replace with your image -->
-                        <div style="margin-top: 30px; border-radius: 15px; overflow: hidden; background: rgba(255,255,255,0.1); min-height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <img src="/assets/img/gallery/delivery-step2.jpg" alt="Track Package" style="width: 100%; height: 200px; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div style="display: none; width: 100%; height: 200px; align-items: center; justify-content: center; color: rgba(255,255,255,0.7);">
-                                <span class="flaticon-support" style="font-size: 80px;"></span>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 40px;">
@@ -446,13 +432,6 @@ import { PackageResponse } from '../models/package.model';
                         <div style="width: 40px; height: 40px; background: #f15f22; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 20px; font-weight: bold;">3</div>
                         <h3 style="color: white; font-size: 24px; margin-bottom: 20px; font-weight: 600;">Fast Delivery</h3>
                         <p style="color: rgba(255,255,255,0.9); line-height: 1.8; font-size: 16px; margin: 0;">Your package arrives safely at its destination. Same-day delivery available for urgent shipments.</p>
-                        <!-- Image placeholder - Replace with your image -->
-                        <div style="margin-top: 30px; border-radius: 15px; overflow: hidden; background: rgba(255,255,255,0.1); min-height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <img src="/assets/img/gallery/delivery-step3.jpg" alt="Fast Delivery" style="width: 100%; height: 200px; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <div style="display: none; width: 100%; height: 200px; align-items: center; justify-content: center; color: rgba(255,255,255,0.7);">
-                                <span class="flaticon-clock" style="font-size: 80px;"></span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -684,4 +663,3 @@ export class HomeComponent {
     });
   }
 }
-
