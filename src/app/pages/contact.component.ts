@@ -50,33 +50,86 @@ import { Contact } from '../models/contact.model';
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label for="message" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Message <span style="color: red;">*</span></label>
                                         <textarea class="form-control w-100" name="message" id="message" 
-                                                  cols="30" rows="9" placeholder="Enter Message" 
-                                                  [(ngModel)]="contact.message" required></textarea>
+                                                  cols="30" rows="9" placeholder="Enter Message *" 
+                                                  [(ngModel)]="contact.message" 
+                                                  required
+                                                  minlength="10"
+                                                  #messageField="ngModel"
+                                                  [class.is-invalid]="messageField.invalid && messageField.touched"></textarea>
+                                        <div *ngIf="messageField.invalid && messageField.touched" class="invalid-feedback" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="messageField.errors?.['required']">Message is required</div>
+                                            <div *ngIf="messageField.errors?.['minlength']">Message must be at least 10 characters</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
+                                        <label for="name" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Name <span style="color: red;">*</span></label>
                                         <input class="form-control valid" name="name" id="name" type="text" 
-                                               placeholder="Enter your name" [(ngModel)]="contact.name" required>
+                                               placeholder="Enter your name *" 
+                                               [(ngModel)]="contact.name" 
+                                               required
+                                               minlength="2"
+                                               pattern="[a-zA-Z\s]+"
+                                               #nameField="ngModel"
+                                               [class.is-invalid]="nameField.invalid && nameField.touched">
+                                        <div *ngIf="nameField.invalid && nameField.touched" class="invalid-feedback" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="nameField.errors?.['required']">Name is required</div>
+                                            <div *ngIf="nameField.errors?.['minlength']">Name must be at least 2 characters</div>
+                                            <div *ngIf="nameField.errors?.['pattern']">Name can only contain letters and spaces</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
+                                        <label for="email" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email <span style="color: red;">*</span></label>
                                         <input class="form-control valid" name="email" id="email" type="email" 
-                                               placeholder="Email" [(ngModel)]="contact.email" required>
+                                               placeholder="Email *" 
+                                               [(ngModel)]="contact.email" 
+                                               required
+                                               email
+                                               #emailField="ngModel"
+                                               [class.is-invalid]="emailField.invalid && emailField.touched">
+                                        <div *ngIf="emailField.invalid && emailField.touched" class="invalid-feedback" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="emailField.errors?.['required']">Email is required</div>
+                                            <div *ngIf="emailField.errors?.['email']">Please enter a valid email address</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
+                                        <label for="subject" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Subject <span style="color: red;">*</span></label>
                                         <input class="form-control" name="subject" id="subject" type="text" 
-                                               placeholder="Enter Subject" [(ngModel)]="contact.subject" required>
+                                               placeholder="Enter Subject *" 
+                                               [(ngModel)]="contact.subject" 
+                                               required
+                                               minlength="3"
+                                               #subjectField="ngModel"
+                                               [class.is-invalid]="subjectField.invalid && subjectField.touched">
+                                        <div *ngIf="subjectField.invalid && subjectField.touched" class="invalid-feedback" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="subjectField.errors?.['required']">Subject is required</div>
+                                            <div *ngIf="subjectField.errors?.['minlength']">Subject must be at least 3 characters</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <input class="form-control" name="phone" id="phone" type="text" 
-                                               placeholder="Phone (Optional)" [(ngModel)]="contact.phone">
+                                        <label for="phone" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Phone Number <span style="color: red;">*</span></label>
+                                        <input class="form-control" name="phone" id="phone" type="tel" 
+                                               placeholder="Phone Number *" 
+                                               [(ngModel)]="contact.phone" 
+                                               required
+                                               pattern="[0-9+\s\-()]+"
+                                               minlength="10"
+                                               #phoneField="ngModel"
+                                               [class.is-invalid]="phoneField.invalid && phoneField.touched">
+                                        <div *ngIf="phoneField.invalid && phoneField.touched" class="invalid-feedback" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="phoneField.errors?.['required']">Phone number is required</div>
+                                            <div *ngIf="phoneField.errors?.['minlength']">Phone number must be at least 10 digits</div>
+                                            <div *ngIf="phoneField.errors?.['pattern']">Please enter a valid phone number</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -86,6 +139,9 @@ import { Contact } from '../models/contact.model';
                                     <span *ngIf="!isSubmitting">Send</span>
                                     <span *ngIf="isSubmitting">Sending...</span>
                                 </button>
+                                <div *ngIf="!contactForm.valid && contactForm.touched" style="color: red; font-size: 12px; margin-top: 10px;">
+                                    Please fill in all required fields correctly
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -123,7 +179,16 @@ import { Contact } from '../models/contact.model';
     <div id="back-top" >
         <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
     </div>
-      `
+      `,
+  styles: [`
+    .is-invalid {
+      border-color: #dc3545 !important;
+      border-width: 2px !important;
+    }
+    .invalid-feedback {
+      display: block;
+    }
+  `]
 })
 export class ContactComponent {
   contact: Contact = {
@@ -142,6 +207,32 @@ export class ContactComponent {
 
   onSubmit() {
     if (this.isSubmitting) return;
+    
+    // Validate all fields are filled
+    if (!this.contact.name || !this.contact.email || !this.contact.phone || !this.contact.subject || !this.contact.message) {
+      this.errorMessage = 'Please fill in all required fields';
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.contact.email)) {
+      this.errorMessage = 'Please enter a valid email address';
+      return;
+    }
+
+    // Validate phone format (at least 10 digits)
+    const phoneRegex = /^[0-9+\s\-()]{10,}$/;
+    if (!phoneRegex.test(this.contact.phone.replace(/\s/g, ''))) {
+      this.errorMessage = 'Please enter a valid phone number (at least 10 digits)';
+      return;
+    }
+
+    // Validate message length
+    if (this.contact.message.trim().length < 10) {
+      this.errorMessage = 'Message must be at least 10 characters long';
+      return;
+    }
     
     this.isSubmitting = true;
     this.successMessage = '';

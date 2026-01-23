@@ -61,49 +61,113 @@ import { UsersStoreService } from '../../services/stores/users-store.service';
           <h3 class="modal-title">Add New User</h3>
           <form (ngSubmit)="createUser()" #userForm="ngForm">
             <div class="form-group">
-              <label>Full Name:</label>
-              <input type="text" [(ngModel)]="newUser.fullName" name="fullName" required class="form-input">
+              <label>Full Name <span style="color: red;">*</span>:</label>
+              <input type="text" [(ngModel)]="newUser.fullName" name="fullName" 
+                     required minlength="2" pattern="[a-zA-Z\s]+"
+                     class="form-input" 
+                     #fullNameField="ngModel"
+                     [class.is-invalid]="fullNameField.invalid && fullNameField.touched">
+              <div *ngIf="fullNameField.invalid && fullNameField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="fullNameField.errors?.['required']">Full name is required</div>
+                <div *ngIf="fullNameField.errors?.['minlength']">Name must be at least 2 characters</div>
+                <div *ngIf="fullNameField.errors?.['pattern']">Name can only contain letters and spaces</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Email:</label>
-              <input type="email" [(ngModel)]="newUser.email" name="email" required class="form-input">
+              <label>Email <span style="color: red;">*</span>:</label>
+              <input type="email" [(ngModel)]="newUser.email" name="email" 
+                     required email
+                     class="form-input"
+                     #emailField="ngModel"
+                     [class.is-invalid]="emailField.invalid && emailField.touched">
+              <div *ngIf="emailField.invalid && emailField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="emailField.errors?.['required']">Email is required</div>
+                <div *ngIf="emailField.errors?.['email']">Please enter a valid email address</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Phone (optional):</label>
-              <input type="text" [(ngModel)]="newUser.phone" name="phone" class="form-input">
+              <label>Phone <span style="color: red;">*</span>:</label>
+              <input type="tel" [(ngModel)]="newUser.phone" name="phone" 
+                     required pattern="[0-9+\s\-()]+" minlength="10"
+                     class="form-input"
+                     #phoneField="ngModel"
+                     [class.is-invalid]="phoneField.invalid && phoneField.touched">
+              <div *ngIf="phoneField.invalid && phoneField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="phoneField.errors?.['required']">Phone number is required</div>
+                <div *ngIf="phoneField.errors?.['minlength']">Phone number must be at least 10 digits</div>
+                <div *ngIf="phoneField.errors?.['pattern']">Please enter a valid phone number</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Password:</label>
-              <input type="password" [(ngModel)]="newUser.password" name="password" required class="form-input">
+              <label>Password <span style="color: red;">*</span>:</label>
+              <input type="password" [(ngModel)]="newUser.password" name="password" 
+                     required minlength="6"
+                     class="form-input"
+                     #passwordField="ngModel"
+                     [class.is-invalid]="passwordField.invalid && passwordField.touched">
+              <div *ngIf="passwordField.invalid && passwordField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="passwordField.errors?.['required']">Password is required</div>
+                <div *ngIf="passwordField.errors?.['minlength']">Password must be at least 6 characters</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Role:</label>
-              <select [(ngModel)]="newUser.role" name="role" required class="form-input">
-                <option value="">-- Select Role --</option>
+              <label>Role <span style="color: red;">*</span>:</label>
+              <select [(ngModel)]="newUser.role" name="role" 
+                      required class="form-input"
+                      #roleField="ngModel"
+                      [class.is-invalid]="roleField.invalid && roleField.touched">
+                <option value="">-- Select Role * --</option>
                 <option value="ADMIN">Admin</option>
                 <option value="DISPATCHER">Dispatcher</option>
                 <option value="RIDER">Rider</option>
                 <option value="CLIENT">Client</option>
               </select>
+              <div *ngIf="roleField.invalid && roleField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                Role is required
+              </div>
             </div>
             
             <div class="form-group" *ngIf="newUser.role === 'RIDER'">
-              <label>Zone:</label>
-              <input type="text" [(ngModel)]="newUser.zone" name="zone" class="form-input">
+              <label>Zone <span style="color: red;">*</span>:</label>
+              <input type="text" [(ngModel)]="newUser.zone" name="zone" 
+                     required minlength="2"
+                     class="form-input"
+                     #zoneField="ngModel"
+                     [class.is-invalid]="zoneField.invalid && zoneField.touched">
+              <div *ngIf="zoneField.invalid && zoneField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="zoneField.errors?.['required']">Zone is required for riders</div>
+                <div *ngIf="zoneField.errors?.['minlength']">Zone must be at least 2 characters</div>
+              </div>
             </div>
             
             <div class="form-group" *ngIf="newUser.role === 'RIDER'">
-              <label>Vehicle:</label>
-              <input type="text" [(ngModel)]="newUser.vehicle" name="vehicle" class="form-input">
+              <label>Vehicle <span style="color: red;">*</span>:</label>
+              <input type="text" [(ngModel)]="newUser.vehicle" name="vehicle" 
+                     required minlength="2"
+                     class="form-input"
+                     #vehicleField="ngModel"
+                     [class.is-invalid]="vehicleField.invalid && vehicleField.touched">
+              <div *ngIf="vehicleField.invalid && vehicleField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="vehicleField.errors?.['required']">Vehicle is required for riders</div>
+                <div *ngIf="vehicleField.errors?.['minlength']">Vehicle must be at least 2 characters</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Branch (optional):</label>
-              <input type="text" [(ngModel)]="newUser.branch" name="branch" class="form-input">
+              <label>Branch <span style="color: red;">*</span>:</label>
+              <input type="text" [(ngModel)]="newUser.branch" name="branch" 
+                     required minlength="2"
+                     class="form-input"
+                     #branchField="ngModel"
+                     [class.is-invalid]="branchField.invalid && branchField.touched">
+              <div *ngIf="branchField.invalid && branchField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="branchField.errors?.['required']">Branch is required</div>
+                <div *ngIf="branchField.errors?.['minlength']">Branch must be at least 2 characters</div>
+              </div>
             </div>
             
             <div *ngIf="errorMessage" class="error-message">
@@ -126,48 +190,112 @@ import { UsersStoreService } from '../../services/stores/users-store.service';
           <h3 class="modal-title">Edit User</h3>
           <form (ngSubmit)="updateUser()" #editForm="ngForm">
             <div class="form-group">
-              <label>Full Name:</label>
-              <input type="text" [(ngModel)]="editUserData.fullName" name="editFullName" required class="form-input">
+              <label>Full Name <span style="color: red;">*</span>:</label>
+              <input type="text" [(ngModel)]="editUserData.fullName" name="editFullName" 
+                     required minlength="2" pattern="[a-zA-Z\s]+"
+                     class="form-input"
+                     #editFullNameField="ngModel"
+                     [class.is-invalid]="editFullNameField.invalid && editFullNameField.touched">
+              <div *ngIf="editFullNameField.invalid && editFullNameField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="editFullNameField.errors?.['required']">Full name is required</div>
+                <div *ngIf="editFullNameField.errors?.['minlength']">Name must be at least 2 characters</div>
+                <div *ngIf="editFullNameField.errors?.['pattern']">Name can only contain letters and spaces</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Email:</label>
-              <input type="email" [(ngModel)]="editUserData.email" name="editEmail" required class="form-input">
+              <label>Email <span style="color: red;">*</span>:</label>
+              <input type="email" [(ngModel)]="editUserData.email" name="editEmail" 
+                     required email
+                     class="form-input"
+                     #editEmailField="ngModel"
+                     [class.is-invalid]="editEmailField.invalid && editEmailField.touched">
+              <div *ngIf="editEmailField.invalid && editEmailField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="editEmailField.errors?.['required']">Email is required</div>
+                <div *ngIf="editEmailField.errors?.['email']">Please enter a valid email address</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Phone (optional):</label>
-              <input type="text" [(ngModel)]="editUserData.phone" name="editPhone" class="form-input">
+              <label>Phone <span style="color: red;">*</span>:</label>
+              <input type="tel" [(ngModel)]="editUserData.phone" name="editPhone" 
+                     required pattern="[0-9+\s\-()]+" minlength="10"
+                     class="form-input"
+                     #editPhoneField="ngModel"
+                     [class.is-invalid]="editPhoneField.invalid && editPhoneField.touched">
+              <div *ngIf="editPhoneField.invalid && editPhoneField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="editPhoneField.errors?.['required']">Phone number is required</div>
+                <div *ngIf="editPhoneField.errors?.['minlength']">Phone number must be at least 10 digits</div>
+                <div *ngIf="editPhoneField.errors?.['pattern']">Please enter a valid phone number</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>New Password (leave blank to keep current):</label>
-              <input type="password" [(ngModel)]="editUserData.password" name="editPassword" placeholder="Leave blank to keep current password" class="form-input">
+              <label>New Password (leave blank to keep current, or enter new password with at least 6 characters):</label>
+              <input type="password" [(ngModel)]="editUserData.password" name="editPassword" 
+                     placeholder="Leave blank to keep current password" 
+                     [minlength]="editUserData.password ? 6 : 0"
+                     class="form-input"
+                     #editPasswordField="ngModel"
+                     [class.is-invalid]="editPasswordField.invalid && editPasswordField.touched && editUserData.password">
+              <div *ngIf="editPasswordField.invalid && editPasswordField.touched && editUserData.password" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="editPasswordField.errors?.['minlength']">Password must be at least 6 characters</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Role:</label>
-              <select [(ngModel)]="editUserData.role" name="editRole" required class="form-input">
+              <label>Role <span style="color: red;">*</span>:</label>
+              <select [(ngModel)]="editUserData.role" name="editRole" 
+                      required class="form-input"
+                      #editRoleField="ngModel"
+                      [class.is-invalid]="editRoleField.invalid && editRoleField.touched">
                 <option value="ADMIN">Admin</option>
                 <option value="DISPATCHER">Dispatcher</option>
                 <option value="RIDER">Rider</option>
                 <option value="CLIENT">Client</option>
               </select>
+              <div *ngIf="editRoleField.invalid && editRoleField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                Role is required
+              </div>
             </div>
             
             <div class="form-group" *ngIf="editUserData.role === 'RIDER'">
-              <label>Zone:</label>
-              <input type="text" [(ngModel)]="editUserData.zone" name="editZone" class="form-input">
+              <label>Zone <span style="color: red;">*</span>:</label>
+              <input type="text" [(ngModel)]="editUserData.zone" name="editZone" 
+                     required minlength="2"
+                     class="form-input"
+                     #editZoneField="ngModel"
+                     [class.is-invalid]="editZoneField.invalid && editZoneField.touched">
+              <div *ngIf="editZoneField.invalid && editZoneField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="editZoneField.errors?.['required']">Zone is required for riders</div>
+                <div *ngIf="editZoneField.errors?.['minlength']">Zone must be at least 2 characters</div>
+              </div>
             </div>
             
             <div class="form-group" *ngIf="editUserData.role === 'RIDER'">
-              <label>Vehicle:</label>
-              <input type="text" [(ngModel)]="editUserData.vehicle" name="editVehicle" class="form-input">
+              <label>Vehicle <span style="color: red;">*</span>:</label>
+              <input type="text" [(ngModel)]="editUserData.vehicle" name="editVehicle" 
+                     required minlength="2"
+                     class="form-input"
+                     #editVehicleField="ngModel"
+                     [class.is-invalid]="editVehicleField.invalid && editVehicleField.touched">
+              <div *ngIf="editVehicleField.invalid && editVehicleField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="editVehicleField.errors?.['required']">Vehicle is required for riders</div>
+                <div *ngIf="editVehicleField.errors?.['minlength']">Vehicle must be at least 2 characters</div>
+              </div>
             </div>
             
             <div class="form-group">
-              <label>Branch (optional):</label>
-              <input type="text" [(ngModel)]="editUserData.branch" name="editBranch" class="form-input">
+              <label>Branch <span style="color: red;">*</span>:</label>
+              <input type="text" [(ngModel)]="editUserData.branch" name="editBranch" 
+                     required minlength="2"
+                     class="form-input"
+                     #editBranchField="ngModel"
+                     [class.is-invalid]="editBranchField.invalid && editBranchField.touched">
+              <div *ngIf="editBranchField.invalid && editBranchField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                <div *ngIf="editBranchField.errors?.['required']">Branch is required</div>
+                <div *ngIf="editBranchField.errors?.['minlength']">Branch must be at least 2 characters</div>
+              </div>
             </div>
             
             <div class="form-group">
@@ -358,6 +486,11 @@ import { UsersStoreService } from '../../services/stores/users-store.service';
       border-color: #f15f22;
     }
     
+    .form-input.is-invalid {
+      border-color: #dc3545 !important;
+      border-width: 2px !important;
+    }
+    
     .error-message {
       color: #F54F5F;
       margin-bottom: 15px;
@@ -467,6 +600,45 @@ export class AdminUsersComponent implements OnInit {
   async createUser(): Promise<void> {
     if (this.creating) return;
     
+    // Validate all required fields
+    if (!this.newUser.fullName || !this.newUser.email || !this.newUser.phone || 
+        !this.newUser.password || !this.newUser.role || !this.newUser.branch) {
+      this.errorMessage = 'Please fill in all required fields';
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.newUser.email)) {
+      this.errorMessage = 'Please enter a valid email address';
+      return;
+    }
+
+    // Validate phone number (at least 10 digits)
+    const phoneRegex = /^[0-9+\s\-()]{10,}$/;
+    if (!phoneRegex.test(this.newUser.phone.replace(/\s/g, ''))) {
+      this.errorMessage = 'Please enter a valid phone number (at least 10 digits)';
+      return;
+    }
+
+    // Validate password length
+    if (this.newUser.password.length < 6) {
+      this.errorMessage = 'Password must be at least 6 characters long';
+      return;
+    }
+
+    // Validate rider-specific fields
+    if (this.newUser.role === 'RIDER') {
+      if (!this.newUser.zone || this.newUser.zone.trim().length < 2) {
+        this.errorMessage = 'Zone is required for riders (at least 2 characters)';
+        return;
+      }
+      if (!this.newUser.vehicle || this.newUser.vehicle.trim().length < 2) {
+        this.errorMessage = 'Vehicle is required for riders (at least 2 characters)';
+        return;
+      }
+    }
+    
     this.creating = true;
     this.errorMessage = '';
     
@@ -535,6 +707,47 @@ export class AdminUsersComponent implements OnInit {
 
   async updateUser(): Promise<void> {
     if (this.updating) return;
+    
+    // Validate all required fields
+    if (!this.editUserData.fullName || !this.editUserData.email || !this.editUserData.phone || 
+        !this.editUserData.role || !this.editUserData.branch) {
+      this.errorMessage = 'Please fill in all required fields';
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.editUserData.email)) {
+      this.errorMessage = 'Please enter a valid email address';
+      return;
+    }
+
+    // Validate phone number (at least 10 digits)
+    const phoneRegex = /^[0-9+\s\-()]{10,}$/;
+    if (!phoneRegex.test(this.editUserData.phone.replace(/\s/g, ''))) {
+      this.errorMessage = 'Please enter a valid phone number (at least 10 digits)';
+      return;
+    }
+
+    // Validate password if provided
+    if (this.editUserData.password && this.editUserData.password.trim() !== '') {
+      if (this.editUserData.password.length < 6) {
+        this.errorMessage = 'Password must be at least 6 characters long';
+        return;
+      }
+    }
+
+    // Validate rider-specific fields
+    if (this.editUserData.role === 'RIDER') {
+      if (!this.editUserData.zone || this.editUserData.zone.trim().length < 2) {
+        this.errorMessage = 'Zone is required for riders (at least 2 characters)';
+        return;
+      }
+      if (!this.editUserData.vehicle || this.editUserData.vehicle.trim().length < 2) {
+        this.errorMessage = 'Vehicle is required for riders (at least 2 characters)';
+        return;
+      }
+    }
     
     this.updating = true;
     this.errorMessage = '';

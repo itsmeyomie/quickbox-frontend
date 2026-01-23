@@ -216,77 +216,152 @@ import { PackageResponse } from '../models/package.model';
                             <div class="row ">
                                 <div class="col-lg-6 col-md-6">
                                     <div class="input-form">
-                                        <input type="text" placeholder="Your Name" 
-                                               [(ngModel)]="quote.name" name="quoteName" required>
+                                        <label for="quoteName" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Your Name <span style="color: red;">*</span></label>
+                                        <input type="text" id="quoteName" placeholder="Your Name *" 
+                                               [(ngModel)]="quote.name" 
+                                               name="quoteName" 
+                                               required
+                                               minlength="2"
+                                               pattern="[a-zA-Z\s]+"
+                                               #quoteNameField="ngModel"
+                                               [class.is-invalid]="quoteNameField.invalid && quoteNameField.touched">
+                                        <div *ngIf="quoteNameField.invalid && quoteNameField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="quoteNameField.errors?.['required']">Name is required</div>
+                                            <div *ngIf="quoteNameField.errors?.['minlength']">Name must be at least 2 characters</div>
+                                            <div *ngIf="quoteNameField.errors?.['pattern']">Name can only contain letters and spaces</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="input-form">
-                                        <input type="email" placeholder="Email Address" 
-                                               [(ngModel)]="quote.email" name="quoteEmail" required>
+                                        <label for="quoteEmail" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Email Address <span style="color: red;">*</span></label>
+                                        <input type="email" id="quoteEmail" placeholder="Email Address *" 
+                                               [(ngModel)]="quote.email" 
+                                               name="quoteEmail" 
+                                               required
+                                               email
+                                               #quoteEmailField="ngModel"
+                                               [class.is-invalid]="quoteEmailField.invalid && quoteEmailField.touched">
+                                        <div *ngIf="quoteEmailField.invalid && quoteEmailField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="quoteEmailField.errors?.['required']">Email is required</div>
+                                            <div *ngIf="quoteEmailField.errors?.['email']">Please enter a valid email address</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="input-form">
-                                        <input type="text" placeholder="Contact Number" 
-                                               [(ngModel)]="quote.contactNumber" name="quoteContact" required>
+                                        <label for="quoteContact" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Contact Number <span style="color: red;">*</span></label>
+                                        <input type="tel" id="quoteContact" placeholder="Contact Number *" 
+                                               [(ngModel)]="quote.contactNumber" 
+                                               name="quoteContact" 
+                                               required
+                                               pattern="[0-9+\s\-()]+"
+                                               minlength="10"
+                                               #quoteContactField="ngModel"
+                                               [class.is-invalid]="quoteContactField.invalid && quoteContactField.touched">
+                                        <div *ngIf="quoteContactField.invalid && quoteContactField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="quoteContactField.errors?.['required']">Contact number is required</div>
+                                            <div *ngIf="quoteContactField.errors?.['minlength']">Contact number must be at least 10 digits</div>
+                                            <div *ngIf="quoteContactField.errors?.['pattern']">Please enter a valid contact number</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="select-items">
-                                        <select name="serviceType" id="select1" [(ngModel)]="quote.serviceType">
-                                            <option value="">Service Type</option>
+                                        <label for="select1" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Service Type <span style="color: red;">*</span></label>
+                                        <select name="serviceType" id="select1" 
+                                                [(ngModel)]="quote.serviceType" 
+                                                required
+                                                #serviceTypeField="ngModel"
+                                                [class.is-invalid]="serviceTypeField.invalid && serviceTypeField.touched">
+                                            <option value="">-- Select Service Type * --</option>
                                             <option value="Same-Day Delivery (Within City)">Same-Day Delivery (Within City)</option>
                                             <option value="Warehousing & Storage">Warehousing & Storage</option>
                                             <option value="Scheduled Deliveries (Business & Bulk Clients)">Scheduled Deliveries (Business & Bulk Clients)</option>
                                             <option value="Express Parcel Delivery">Express Parcel Delivery</option>
                                             <option value="Last-Mile Delivery for E-Commerce Businesses">Last-Mile Delivery for E-Commerce Businesses</option>
                                         </select>
+                                        <div *ngIf="serviceTypeField.invalid && serviceTypeField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            Service type is required
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="input-form">
-                                        <input type="text" placeholder="Pickup Location" 
-                                               [(ngModel)]="quote.pickupLocation" name="pickupLocation">
+                                        <label for="pickupLocation" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Pickup Location <span style="color: red;">*</span></label>
+                                        <input type="text" id="pickupLocation" placeholder="Pickup Location *" 
+                                               [(ngModel)]="quote.pickupLocation" 
+                                               name="pickupLocation" 
+                                               required
+                                               minlength="3"
+                                               #pickupLocationField="ngModel"
+                                               [class.is-invalid]="pickupLocationField.invalid && pickupLocationField.touched">
+                                        <div *ngIf="pickupLocationField.invalid && pickupLocationField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="pickupLocationField.errors?.['required']">Pickup location is required</div>
+                                            <div *ngIf="pickupLocationField.errors?.['minlength']">Pickup location must be at least 3 characters</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="input-form">
-                                        <input type="text" placeholder="Delivery Destination" 
-                                               [(ngModel)]="quote.deliveryDestination" name="deliveryDestination">
+                                        <label for="deliveryDestination" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Delivery Destination <span style="color: red;">*</span></label>
+                                        <input type="text" id="deliveryDestination" placeholder="Delivery Destination *" 
+                                               [(ngModel)]="quote.deliveryDestination" 
+                                               name="deliveryDestination" 
+                                               required
+                                               minlength="3"
+                                               #deliveryDestinationField="ngModel"
+                                               [class.is-invalid]="deliveryDestinationField.invalid && deliveryDestinationField.touched">
+                                        <div *ngIf="deliveryDestinationField.invalid && deliveryDestinationField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="deliveryDestinationField.errors?.['required']">Delivery destination is required</div>
+                                            <div *ngIf="deliveryDestinationField.errors?.['minlength']">Delivery destination must be at least 3 characters</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="input-form">
-                                        <input type="text" placeholder="Package Weight (kg)" 
-                                               [(ngModel)]="quote.packageWeight" name="packageWeight">
+                                        <label for="packageWeight" style="display: block; margin-bottom: 5px; font-weight: 600; color: #333;">Package Weight (kg) <span style="color: red;">*</span></label>
+                                        <input type="text" id="packageWeight" placeholder="Package Weight (kg) *" 
+                                               [(ngModel)]="quote.packageWeight" 
+                                               name="packageWeight" 
+                                               required
+                                               pattern="[0-9.]+"
+                                               #packageWeightField="ngModel"
+                                               [class.is-invalid]="packageWeightField.invalid && packageWeightField.touched">
+                                        <div *ngIf="packageWeightField.invalid && packageWeightField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            <div *ngIf="packageWeightField.errors?.['required']">Package weight is required</div>
+                                            <div *ngIf="packageWeightField.errors?.['pattern']">Please enter a valid weight (numbers only)</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- Radio Button -->
                                 <div class="col-lg-12">
                                     <div class="radio-wrapper mb-30 mt-15">
-                                        <label>Additional Services:</label>
+                                        <label style="font-weight: 600; color: #333;">Additional Services <span style="color: red;">*</span></label>
                                         <div class="select-radio">
                                             <div class="radio">
                                                 <input id="radio-1" name="additionalServices" type="radio" 
-                                                       value="Standard" [(ngModel)]="quote.additionalServices">
+                                                       value="Standard" [(ngModel)]="quote.additionalServices" required>
                                                 <label for="radio-1" class="radio-label">Standard</label>
                                             </div>
                                             <div class="radio">
                                                 <input id="radio-2" name="additionalServices" type="radio" 
-                                                       value="Express Delivery" [(ngModel)]="quote.additionalServices">
+                                                       value="Express Delivery" [(ngModel)]="quote.additionalServices" required>
                                                 <label for="radio-2" class="radio-label">Express Delivery</label>
                                             </div>
                                             <div class="radio">
                                                 <input id="radio-4" name="additionalServices" type="radio" 
-                                                       value="Insurance" [(ngModel)]="quote.additionalServices">
+                                                       value="Insurance" [(ngModel)]="quote.additionalServices" required>
                                                 <label for="radio-4" class="radio-label">Insurance</label>
                                             </div>
                                             <div class="radio">
                                                 <input id="radio-5" name="additionalServices" type="radio" 
-                                                       value="Custom Packaging" [(ngModel)]="quote.additionalServices">
+                                                       value="Custom Packaging" [(ngModel)]="quote.additionalServices" required>
                                                 <label for="radio-5" class="radio-label">Custom Packaging</label>
                                             </div>
+                                        </div>
+                                        <div *ngIf="!quote.additionalServices && quoteForm.touched" style="color: red; font-size: 12px; margin-top: 5px;">
+                                            Please select an additional service
                                         </div>
                                     </div> 
                                 </div>
@@ -297,6 +372,9 @@ import { PackageResponse } from '../models/package.model';
                                         <span *ngIf="!isSubmittingQuote">Request a Quote</span>
                                         <span *ngIf="isSubmittingQuote">Submitting...</span>
                                     </button>
+                                    <div *ngIf="!quoteForm.valid && quoteForm.touched" style="color: red; font-size: 12px; margin-top: 10px;">
+                                        Please fill in all required fields correctly
+                                    </div>
                                 </div>
                             </div>
                         </form>	
@@ -577,7 +655,16 @@ import { PackageResponse } from '../models/package.model';
 <div id="back-top" >
     <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
 </div>
-      `
+      `,
+  styles: [`
+    .is-invalid {
+      border-color: #dc3545 !important;
+      border-width: 2px !important;
+    }
+    .invalid-feedback {
+      display: block;
+    }
+  `]
 })
 export class HomeComponent {
   trackingId = '';
@@ -636,6 +723,35 @@ export class HomeComponent {
   submitQuote() {
     if (this.isSubmittingQuote) return;
     
+    // Validate all required fields
+    if (!this.quote.name || !this.quote.email || !this.quote.contactNumber || 
+        !this.quote.serviceType || !this.quote.pickupLocation || 
+        !this.quote.deliveryDestination || !this.quote.packageWeight || 
+        !this.quote.additionalServices) {
+      this.quoteErrorMessage = 'Please fill in all required fields';
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.quote.email)) {
+      this.quoteErrorMessage = 'Please enter a valid email address';
+      return;
+    }
+
+    // Validate contact number (at least 10 digits)
+    const phoneRegex = /^[0-9+\s\-()]{10,}$/;
+    if (!phoneRegex.test(this.quote.contactNumber.replace(/\s/g, ''))) {
+      this.quoteErrorMessage = 'Please enter a valid contact number (at least 10 digits)';
+      return;
+    }
+
+    // Validate package weight is a number
+    if (isNaN(parseFloat(this.quote.packageWeight)) || parseFloat(this.quote.packageWeight) <= 0) {
+      this.quoteErrorMessage = 'Please enter a valid package weight (must be a positive number)';
+      return;
+    }
+    
     this.isSubmittingQuote = true;
     this.quoteSuccessMessage = '';
     this.quoteErrorMessage = '';
@@ -652,7 +768,7 @@ export class HomeComponent {
           pickupLocation: '',
           deliveryDestination: '',
           packageWeight: '',
-          additionalServices: 'Standard'
+          additionalServices: ''
         };
         this.isSubmittingQuote = false;
       },
