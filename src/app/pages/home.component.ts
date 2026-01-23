@@ -222,13 +222,11 @@ import { PackageResponse } from '../models/package.model';
                                                name="quoteName" 
                                                required
                                                minlength="2"
-                                               pattern="[a-zA-Z\s]+"
                                                #quoteNameField="ngModel"
                                                [class.is-invalid]="quoteNameField.invalid && quoteNameField.touched">
                                         <div *ngIf="quoteNameField.invalid && quoteNameField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
                                             <div *ngIf="quoteNameField.errors?.['required']">Name is required</div>
                                             <div *ngIf="quoteNameField.errors?.['minlength']">Name must be at least 2 characters</div>
-                                            <div *ngIf="quoteNameField.errors?.['pattern']">Name can only contain letters and spaces</div>
                                         </div>
                                     </div>
                                 </div>
@@ -729,6 +727,13 @@ export class HomeComponent {
         !this.quote.deliveryDestination || !this.quote.packageWeight || 
         !this.quote.additionalServices) {
       this.quoteErrorMessage = 'Please fill in all required fields';
+      return;
+    }
+
+    // Validate name (trim and check length)
+    const trimmedName = this.quote.name.trim();
+    if (trimmedName.length < 2) {
+      this.quoteErrorMessage = 'Name must be at least 2 characters long';
       return;
     }
 

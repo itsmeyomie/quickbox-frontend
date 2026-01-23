@@ -63,14 +63,13 @@ import { UsersStoreService } from '../../services/stores/users-store.service';
             <div class="form-group">
               <label>Full Name <span style="color: red;">*</span>:</label>
               <input type="text" [(ngModel)]="newUser.fullName" name="fullName" 
-                     required minlength="2" pattern="[a-zA-Z\s]+"
+                     required minlength="2"
                      class="form-input" 
                      #fullNameField="ngModel"
                      [class.is-invalid]="fullNameField.invalid && fullNameField.touched">
               <div *ngIf="fullNameField.invalid && fullNameField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
                 <div *ngIf="fullNameField.errors?.['required']">Full name is required</div>
                 <div *ngIf="fullNameField.errors?.['minlength']">Name must be at least 2 characters</div>
-                <div *ngIf="fullNameField.errors?.['pattern']">Name can only contain letters and spaces</div>
               </div>
             </div>
             
@@ -192,14 +191,13 @@ import { UsersStoreService } from '../../services/stores/users-store.service';
             <div class="form-group">
               <label>Full Name <span style="color: red;">*</span>:</label>
               <input type="text" [(ngModel)]="editUserData.fullName" name="editFullName" 
-                     required minlength="2" pattern="[a-zA-Z\s]+"
+                     required minlength="2"
                      class="form-input"
                      #editFullNameField="ngModel"
                      [class.is-invalid]="editFullNameField.invalid && editFullNameField.touched">
               <div *ngIf="editFullNameField.invalid && editFullNameField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
                 <div *ngIf="editFullNameField.errors?.['required']">Full name is required</div>
                 <div *ngIf="editFullNameField.errors?.['minlength']">Name must be at least 2 characters</div>
-                <div *ngIf="editFullNameField.errors?.['pattern']">Name can only contain letters and spaces</div>
               </div>
             </div>
             

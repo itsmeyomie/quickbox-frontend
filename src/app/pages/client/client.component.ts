@@ -52,14 +52,13 @@ import { environment } from '../../../environments/environment';
               <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; font-weight: 600;">Receiver Name <span style="color: red;">*</span>:</label>
                 <input type="text" [(ngModel)]="orderData.receiverName" name="receiverName" 
-                       required minlength="2" pattern="[a-zA-Z\s]+"
+                       required minlength="2"
                        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"
                        #receiverNameField="ngModel"
                        [style.border-color]="receiverNameField.invalid && receiverNameField.touched ? '#dc3545' : '#ddd'">
                 <div *ngIf="receiverNameField.invalid && receiverNameField.touched" style="color: red; font-size: 12px; margin-top: 5px;">
                   <div *ngIf="receiverNameField.errors?.['required']">Receiver name is required</div>
                   <div *ngIf="receiverNameField.errors?.['minlength']">Name must be at least 2 characters</div>
-                  <div *ngIf="receiverNameField.errors?.['pattern']">Name can only contain letters and spaces</div>
                 </div>
               </div>
               <div style="margin-bottom: 15px;">

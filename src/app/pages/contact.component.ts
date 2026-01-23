@@ -72,13 +72,11 @@ import { Contact } from '../models/contact.model';
                                                [(ngModel)]="contact.name" 
                                                required
                                                minlength="2"
-                                               pattern="[a-zA-Z\s]+"
                                                #nameField="ngModel"
                                                [class.is-invalid]="nameField.invalid && nameField.touched">
                                         <div *ngIf="nameField.invalid && nameField.touched" class="invalid-feedback" style="color: red; font-size: 12px; margin-top: 5px;">
                                             <div *ngIf="nameField.errors?.['required']">Name is required</div>
                                             <div *ngIf="nameField.errors?.['minlength']">Name must be at least 2 characters</div>
-                                            <div *ngIf="nameField.errors?.['pattern']">Name can only contain letters and spaces</div>
                                         </div>
                                     </div>
                                 </div>
@@ -211,6 +209,13 @@ export class ContactComponent {
     // Validate all fields are filled
     if (!this.contact.name || !this.contact.email || !this.contact.phone || !this.contact.subject || !this.contact.message) {
       this.errorMessage = 'Please fill in all required fields';
+      return;
+    }
+
+    // Validate name (trim and check length)
+    const trimmedName = this.contact.name.trim();
+    if (trimmedName.length < 2) {
+      this.errorMessage = 'Name must be at least 2 characters long';
       return;
     }
 
