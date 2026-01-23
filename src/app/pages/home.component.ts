@@ -24,18 +24,21 @@ import { PackageResponse } from '../models/package.model';
                                 <h1>Fast & Reliable <span>QuickBox</span> Delivery!</h1>
                             </div>
                             <!--Hero form -->
-                            <form (ngSubmit)="trackPackage()" class="search-box">
+                            <form (ngSubmit)="trackPackage()" class="search-box" #trackForm1="ngForm">
                                 <div class="input-form">
                                     <input type="text" placeholder="Your Tracking ID" 
-                                           [(ngModel)]="trackingId" name="trackingId" required>
+                                           [(ngModel)]="trackingId" name="trackingId" required #trackingIdField1="ngModel">
                                 </div>
                                 <div class="search-form">
-                                    <button type="submit" [disabled]="isTracking" 
+                                    <button type="submit" [disabled]="isTracking || !trackForm1.valid" 
                                             style="background: #f15f22; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; white-space: nowrap;">
                                         Track Package
                                     </button>
                                 </div>	
                             </form>	
+                            <div *ngIf="!trackForm1.valid && trackForm1.touched" style="color: #ffdede; margin-top: 10px; font-size: 13px;">
+                                Please enter your tracking ID
+                            </div>
                             <!-- Hero Pera -->
                             <div class="hero-pera">
                                 <p>Track your package in real-time</p>
@@ -533,16 +536,19 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-8 offset-lg-2">
                     <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; text-align: center;">
                         <h3 style="color: white; font-size: 28px; margin-bottom: 25px; font-weight: 600;">Track Your Package Instantly</h3>
-                        <form (ngSubmit)="trackPackage()" style="display: flex; gap: 15px; max-width: 600px; margin: 0 auto;">
+                        <form (ngSubmit)="trackPackage()" #trackForm2="ngForm" style="display: flex; gap: 15px; max-width: 600px; margin: 0 auto;">
                             <input type="text" placeholder="Enter your tracking ID" 
-                                   [(ngModel)]="trackingId" name="trackingId2" required
+                                   [(ngModel)]="trackingId" name="trackingId2" required #trackingIdField2="ngModel"
                                    style="flex: 1; padding: 15px 20px; border: none; border-radius: 10px; font-size: 16px;">
-                            <button type="submit" class="submit-btn" [disabled]="isTracking"
+                            <button type="submit" class="submit-btn" [disabled]="isTracking || !trackForm2.valid"
                                     style="background: #f15f22; color: white; padding: 15px 35px; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; white-space: nowrap;">
                                 <span *ngIf="!isTracking">Track Now</span>
                                 <span *ngIf="isTracking">Tracking...</span>
                             </button>
                         </form>
+                        <div *ngIf="!trackForm2.valid && trackForm2.touched" style="color: #ffdede; margin-top: 10px; font-size: 13px;">
+                            Please enter your tracking ID
+                        </div>
                     </div>
                 </div>
             </div>
@@ -697,12 +703,13 @@ export class HomeComponent {
   }
 
   trackPackage() {
-    if (!this.trackingId || this.isTracking) return;
+    const trackingId = (this.trackingId || '').trim();
+    if (!trackingId || this.isTracking) return;
     
     this.isTracking = true;
     this.trackingResult = null;
 
-    this.apiService.trackPackage(this.trackingId).subscribe({
+    this.apiService.trackPackage(trackingId).subscribe({
       next: (response) => {
         this.trackingResult = response;
         this.isTracking = false;
