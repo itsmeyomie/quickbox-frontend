@@ -86,38 +86,99 @@ import { QuoteRequest } from '../models/quote.model';
             <div *ngIf="quoteErrorMessage" class="alert alert-danger" style="background: #f44336; color: white; padding: 15px 20px; border-radius: 5px; margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto;">
                 {{ quoteErrorMessage }}
             </div>
-            <form (ngSubmit)="submitPartnershipRequest()" style="max-width: 500px; margin: auto;">
-                <input type="text" placeholder="Company Name" 
-                       [(ngModel)]="partnershipForm.companyName" 
-                       name="companyName" 
-                       required
-                       style="width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box;">
-                <input type="text" placeholder="Contact Person" 
-                       [(ngModel)]="partnershipForm.contactPerson" 
-                       name="contactPerson" 
-                       required
-                       style="width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box;">
-                <input type="email" placeholder="Email Address" 
-                       [(ngModel)]="partnershipForm.email" 
-                       name="email" 
-                       required
-                       style="width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box;">
-                <input type="text" placeholder="Country" 
-                       [(ngModel)]="partnershipForm.country" 
-                       name="country" 
-                       required
-                       style="width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box;">
-                <textarea placeholder="Tell us about your shipping needs" 
-                          [(ngModel)]="partnershipForm.shippingNeeds" 
-                          name="shippingNeeds"
-                          rows="4"
-                          style="width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box; resize: vertical; font-family: inherit;"></textarea>
+            <form (ngSubmit)="submitPartnershipRequest()" #partnershipFormRef="ngForm" style="max-width: 500px; margin: auto;">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: white;">Company Name <span style="color: #ffcccb;">*</span></label>
+                    <input type="text" placeholder="Company Name *" 
+                           [(ngModel)]="partnershipForm.companyName" 
+                           name="companyName" 
+                           required
+                           minlength="2"
+                           #companyNameField="ngModel"
+                           [style.border]="companyNameField.invalid && companyNameField.touched ? '2px solid #ffcccb' : 'none'"
+                           style="width: 100%; padding: 14px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box;">
+                    <div *ngIf="companyNameField.invalid && companyNameField.touched" style="color: #ffcccb; font-size: 12px; margin-top: 5px;">
+                        <div *ngIf="companyNameField.errors?.['required']">Company name is required</div>
+                        <div *ngIf="companyNameField.errors?.['minlength']">Company name must be at least 2 characters</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: white;">Contact Person <span style="color: #ffcccb;">*</span></label>
+                    <input type="text" placeholder="Contact Person *" 
+                           [(ngModel)]="partnershipForm.contactPerson" 
+                           name="contactPerson" 
+                           required
+                           minlength="2"
+                           #contactPersonField="ngModel"
+                           [style.border]="contactPersonField.invalid && contactPersonField.touched ? '2px solid #ffcccb' : 'none'"
+                           style="width: 100%; padding: 14px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box;">
+                    <div *ngIf="contactPersonField.invalid && contactPersonField.touched" style="color: #ffcccb; font-size: 12px; margin-top: 5px;">
+                        <div *ngIf="contactPersonField.errors?.['required']">Contact person is required</div>
+                        <div *ngIf="contactPersonField.errors?.['minlength']">Contact person name must be at least 2 characters</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: white;">Email Address <span style="color: #ffcccb;">*</span></label>
+                    <input type="email" placeholder="Email Address *" 
+                           [(ngModel)]="partnershipForm.email" 
+                           name="email" 
+                           required
+                           email
+                           #emailField="ngModel"
+                           [style.border]="emailField.invalid && emailField.touched ? '2px solid #ffcccb' : 'none'"
+                           style="width: 100%; padding: 14px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box;">
+                    <div *ngIf="emailField.invalid && emailField.touched" style="color: #ffcccb; font-size: 12px; margin-top: 5px;">
+                        <div *ngIf="emailField.errors?.['required']">Email address is required</div>
+                        <div *ngIf="emailField.errors?.['email']">Please enter a valid email address</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: white;">Country <span style="color: #ffcccb;">*</span></label>
+                    <input type="text" placeholder="Country *" 
+                           [(ngModel)]="partnershipForm.country" 
+                           name="country" 
+                           required
+                           minlength="2"
+                           #countryField="ngModel"
+                           [style.border]="countryField.invalid && countryField.touched ? '2px solid #ffcccb' : 'none'"
+                           style="width: 100%; padding: 14px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box;">
+                    <div *ngIf="countryField.invalid && countryField.touched" style="color: #ffcccb; font-size: 12px; margin-top: 5px;">
+                        <div *ngIf="countryField.errors?.['required']">Country is required</div>
+                        <div *ngIf="countryField.errors?.['minlength']">Country name must be at least 2 characters</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; color: white;">Shipping Needs <span style="color: #ffcccb;">*</span></label>
+                    <textarea placeholder="Tell us about your shipping needs *" 
+                              [(ngModel)]="partnershipForm.shippingNeeds" 
+                              name="shippingNeeds"
+                              required
+                              minlength="10"
+                              rows="4"
+                              #shippingNeedsField="ngModel"
+                              [style.border]="shippingNeedsField.invalid && shippingNeedsField.touched ? '2px solid #ffcccb' : 'none'"
+                              style="width: 100%; padding: 14px; border-radius: 5px; border: none; font-size: 16px; box-sizing: border-box; resize: vertical; font-family: inherit;"></textarea>
+                    <div *ngIf="shippingNeedsField.invalid && shippingNeedsField.touched" style="color: #ffcccb; font-size: 12px; margin-top: 5px;">
+                        <div *ngIf="shippingNeedsField.errors?.['required']">Please tell us about your shipping needs</div>
+                        <div *ngIf="shippingNeedsField.errors?.['minlength']">Please provide at least 10 characters</div>
+                    </div>
+                </div>
+                
                 <button type="submit" 
-                        [disabled]="isSubmittingQuote"
-                        style="width: 100%; background-color: #F15A24; color: white; padding: 15px; border: none; font-size: 18px; cursor: pointer; border-radius: 5px; font-weight: 600; transition: all 0.3s ease;">
+                        [disabled]="isSubmittingQuote || !partnershipFormRef.valid"
+                        [style.opacity]="(isSubmittingQuote || !partnershipFormRef.valid) ? '0.6' : '1'"
+                        [style.cursor]="(isSubmittingQuote || !partnershipFormRef.valid) ? 'not-allowed' : 'pointer'"
+                        style="width: 100%; background-color: #F15A24; color: white; padding: 15px; border: none; font-size: 18px; border-radius: 5px; font-weight: 600; transition: all 0.3s ease;">
                     <span *ngIf="!isSubmittingQuote">Submit Request</span>
                     <span *ngIf="isSubmittingQuote">Submitting...</span>
                 </button>
+                <div *ngIf="!partnershipFormRef.valid && partnershipFormRef.touched" style="color: #ffcccb; font-size: 12px; margin-top: 10px; text-align: center;">
+                    Please fill in all required fields correctly
+                </div>
             </form>
         </div>
     </div>
@@ -145,20 +206,62 @@ export class LandingPageComponent {
   submitPartnershipRequest() {
     if (this.isSubmittingQuote) return;
     
+    // Validate all required fields are filled
+    if (!this.partnershipForm.companyName || !this.partnershipForm.contactPerson || 
+        !this.partnershipForm.email || !this.partnershipForm.country || 
+        !this.partnershipForm.shippingNeeds) {
+      this.quoteErrorMessage = 'Please fill in all required fields';
+      return;
+    }
+
+    // Validate trimmed values (not just whitespace)
+    const trimmedCompanyName = this.partnershipForm.companyName.trim();
+    const trimmedContactPerson = this.partnershipForm.contactPerson.trim();
+    const trimmedEmail = this.partnershipForm.email.trim();
+    const trimmedCountry = this.partnershipForm.country.trim();
+    const trimmedShippingNeeds = this.partnershipForm.shippingNeeds.trim();
+
+    if (trimmedCompanyName.length < 2) {
+      this.quoteErrorMessage = 'Company name must be at least 2 characters long';
+      return;
+    }
+
+    if (trimmedContactPerson.length < 2) {
+      this.quoteErrorMessage = 'Contact person name must be at least 2 characters long';
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      this.quoteErrorMessage = 'Please enter a valid email address';
+      return;
+    }
+
+    if (trimmedCountry.length < 2) {
+      this.quoteErrorMessage = 'Country name must be at least 2 characters long';
+      return;
+    }
+
+    if (trimmedShippingNeeds.length < 10) {
+      this.quoteErrorMessage = 'Please provide at least 10 characters describing your shipping needs';
+      return;
+    }
+    
     this.isSubmittingQuote = true;
     this.quoteSuccessMessage = '';
     this.quoteErrorMessage = '';
 
     // Convert partnership form to quote request format
     const quoteRequest: QuoteRequest = {
-      name: this.partnershipForm.contactPerson,
-      email: this.partnershipForm.email,
+      name: trimmedContactPerson,
+      email: trimmedEmail,
       contactNumber: '', // Not in partnership form
       serviceType: 'Partnership Request',
-      pickupLocation: this.partnershipForm.country,
+      pickupLocation: trimmedCountry,
       deliveryDestination: '',
       packageWeight: '',
-      additionalServices: this.partnershipForm.shippingNeeds
+      additionalServices: trimmedShippingNeeds
     };
 
     this.apiService.submitQuoteRequest(quoteRequest).subscribe({
