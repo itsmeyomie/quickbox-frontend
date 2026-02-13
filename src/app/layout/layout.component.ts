@@ -68,6 +68,8 @@ import { NgIf, NgFor, CommonModule } from '@angular/common';
                                             <li><a routerLink="/" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-home" style="font-size: 14px;"></i> Home</a></li>
                                             <li><a routerLink="/about" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-info-circle" style="font-size: 14px;"></i> About</a></li>
                                             <li><a routerLink="/services" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><span class="flaticon-shipped" style="font-size: 14px; color: #f15f22;"></span> Services</a></li>
+                                            <li><a routerLink="/how-it-works" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-cogs" style="font-size: 14px;"></i> How It Works</a></li>
+                                            <li><a routerLink="/trust-proof" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-shield-alt" style="font-size: 14px;"></i> Trust & Proof</a></li>
                                             <li><a routerLink="/blog" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-blog" style="font-size: 14px;"></i> Blog</a></li>
                                             <li><a routerLink="/contact" style="padding: 10px 0; display: flex; align-items: center; gap: 5px;"><i class="fas fa-envelope" style="font-size: 14px;"></i> Contact</a></li>
                                         </ul>
@@ -105,6 +107,16 @@ import { NgIf, NgFor, CommonModule } from '@angular/common';
                                         <li>
                                             <a routerLink="/services" (click)="mobileMenuOpen = false" style="display: flex; align-items: center; padding: 15px 20px; text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: all 0.3s; border-bottom: 1px solid #f0f0f0;">
                                                 <span class="flaticon-shipped" style="margin-right: 12px; color: #f15f22; width: 20px; text-align: center; font-size: 18px;"></span>Services
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a routerLink="/how-it-works" (click)="mobileMenuOpen = false" style="display: flex; align-items: center; padding: 15px 20px; text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: all 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                                <i class="fas fa-cogs" style="margin-right: 12px; color: #f15f22; width: 20px; text-align: center;"></i>How It Works
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a routerLink="/trust-proof" (click)="mobileMenuOpen = false" style="display: flex; align-items: center; padding: 15px 20px; text-decoration: none; color: #333; font-weight: 500; font-size: 16px; transition: all 0.3s; border-bottom: 1px solid #f0f0f0;">
+                                                <i class="fas fa-shield-alt" style="margin-right: 12px; color: #f15f22; width: 20px; text-align: center;"></i>Trust & Proof
                                             </a>
                                         </li>
                                         <li>
@@ -164,7 +176,8 @@ import { NgIf, NgFor, CommonModule } from '@angular/common';
                                 <h4 style="margin-bottom: 25px;">COMPANY</h4>
                                 <ul style="list-style: none; padding: 0; margin: 0;">
                                     <li style="margin-bottom: 12px;"><a routerLink="/about" style="text-decoration: none; color: inherit;">About Us</a></li>
-                                    <li style="margin-bottom: 12px;"><a href="#" style="text-decoration: none; color: inherit;">Our Team</a></li>
+                                    <li style="margin-bottom: 12px;"><a routerLink="/how-it-works" style="text-decoration: none; color: inherit;">How It Works</a></li>
+                                    <li style="margin-bottom: 12px;"><a routerLink="/trust-proof" style="text-decoration: none; color: inherit;">Trust & Proof</a></li>
                                     <li style="margin-bottom: 12px;"><a routerLink="/blog" style="text-decoration: none; color: inherit;">Press & Blog</a></li>
                                     <li style="margin-bottom: 12px;"><a href="#" style="text-decoration: none; color: inherit;">Privacy Policy</a></li>
                                 </ul>

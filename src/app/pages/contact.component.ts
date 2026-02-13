@@ -13,11 +13,11 @@ import { Contact } from '../models/contact.model';
     <main>
         <!--? slider Area Start-->
         <div class="slider-area ">
-            <div class="single-slider hero-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
+            <div class="single-slider hero-overly slider-height2 d-flex align-items-center" data-background="assets/img/pics/outside.jpeg" style="padding: 80px 0;">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-12">
-                            <div class="hero-cap">
+                            <div class="hero-cap" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
                                 <h2>Contact QuickBox</h2>
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -157,6 +157,19 @@ import { Contact } from '../models/contact.model';
                                 <h3>+254118047315</h3>
                                 <p style="font-weight: 600; color: #f15f22; margin-bottom: 5px;">Dedicated Call Center</p>
                                 <p>Mon to Fri 8am to 8pm</p>
+                            </div>
+                        </div>
+                        <div class="media contact-info" style="margin-bottom: 20px;">
+                            <span class="contact-info__icon" style="background: #25D366; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+                                <i class="fab fa-whatsapp"></i>
+                            </span>
+                            <div class="media-body">
+                                <h3>WhatsApp Us</h3>
+                                <a href="https://wa.me/254118047315" target="_blank" 
+                                   style="color: #25D366; font-weight: 600; text-decoration: none; display: inline-block; margin-top: 5px;">
+                                    Chat on WhatsApp →
+                                </a>
+                                <p style="margin-top: 5px; color: #666; font-size: 14px;">Instant contact for logistics buyers</p>
                             </div>
                         </div>
                         <div class="media contact-info">

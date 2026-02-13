@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,58 +11,94 @@ import { PackageResponse } from '../models/package.model';
   selector: 'app-home',
   imports: [RouterLink, CommonModule, FormsModule],
   template: `
-<main>
-    <!--? slider Area Start-->
-    <div class="slider-area ">
-        <div class="slider-active">
-            <!-- Single Slider -->
-            <div class="single-slider slider-height d-flex align-items-center">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-9 col-lg-9">
-                            <div class="hero__caption">
-                                <h1>Fast & Reliable <span>QuickBox</span> Delivery!</h1>
-                            </div>
-                            <!--Hero form -->
-                            <form (ngSubmit)="trackPackage()" class="search-box" #trackForm1="ngForm">
-                                <div class="input-form">
-                                    <input type="text" placeholder="Your Tracking ID" 
-                                           [(ngModel)]="trackingId" name="trackingId" required #trackingIdField1="ngModel">
-                                </div>
-                                <div class="search-form">
-                                    <button type="submit" [disabled]="isTracking || !trackForm1.valid" 
-                                            style="background: #f15f22; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; white-space: nowrap;">
-                                        Track Package
-                                    </button>
-                                </div>	
-                            </form>	
-                            <div *ngIf="!trackForm1.valid && trackForm1.touched" style="color: #ffdede; margin-top: 10px; font-size: 13px;">
-                                Please enter your tracking ID
-                            </div>
-                            <!-- Hero Pera -->
-                            <div class="hero-pera">
-                                <p>Track your package in real-time</p>
-                            </div>
-                            <!-- Tracking Results -->
-                            <div *ngIf="trackingResult" class="mt-3" style="color: white;">
-                                <div *ngIf="trackingResult.success && trackingResult.data" class="alert alert-success">
-                                    <strong>Package Found!</strong><br>
-                                    Status: {{ trackingResult.data.status }}<br>
-                                    <span *ngIf="trackingResult.data.estimatedDelivery">
-                                        Estimated Delivery: {{ trackingResult.data.estimatedDelivery | date }}
-                                    </span>
-                                </div>
-                                <div *ngIf="!trackingResult.success" class="alert alert-danger">
-                                    {{ trackingResult.message || 'Package not found' }}
-                                </div>
+<main class="home-main">
+    <!--? Full-Width Hero Slider Start (CitySprint-style) -->
+    <div class="hero-slider-wrapper">
+        <div class="hero-slider-track" [style.transform]="'translateX(-' + (currentSlide * 100) + 'vw)'">
+            <div *ngFor="let slide of heroSlides; let i = index" class="hero-slide" 
+                 [style.background]="'url(' + slide.image + ') center center / cover no-repeat'">
+            </div>
+        </div>
+        <!-- Dark overlay for text readability -->
+        <div class="hero-slider-overlay" style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,31,63,0.75) 0%, rgba(0,61,122,0.65) 50%, rgba(0,0,0,0.4) 100%); pointer-events: none;"></div>
+        <!-- Content overlay -->
+        <div class="hero-slider-content" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 2;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero__caption text-center" style="padding: 40px 0;">
+                            <h1 style="color: white; margin-bottom: 20px; font-size: clamp(28px, 5vw, 48px); font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); line-height: 1.2;">Fast & Reliable <span style="color: #f15f22;">QuickBox</span> Delivery!</h1>
+                            <p style="color: rgba(255,255,255,0.95); font-size: clamp(16px, 2.5vw, 20px); margin-bottom: 25px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                                Your trusted fulfillment partner for e-commerce sellers. We receive, process, and deliver orders seamlessly across Kenya—from Nairobi to Kisumu and beyond.
+                            </p>
+                            <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
+                                <span style="color: white; font-size: clamp(14px, 2vw, 16px);"><strong style="color: #f15f22;">✓</strong> E-Commerce Sellers</span>
+                                <span style="color: white; font-size: clamp(14px, 2vw, 16px);"><strong style="color: #f15f22;">✓</strong> Countrywide Delivery</span>
+                                <span style="color: white; font-size: clamp(14px, 2vw, 16px);"><strong style="color: #f15f22;">✓</strong> Cash on Delivery (COD)</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Slider dots -->
+        <div class="hero-slider-dots" style="position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; gap: 15px; pointer-events: auto;">
+            <button *ngFor="let slide of heroSlides; let i = index" 
+                    (click)="goToSlide(i); pauseSlider();"
+                    [class.active]="currentSlide === i"
+                    class="hero-dot"
+                    type="button"
+                    [attr.aria-label]="'Slide ' + (i+1)">
+            </button>
+        </div>
     </div>
     <!-- slider Area End-->
+    
+    <!-- Tracking Section Start -->
+    <div class="tracking-section" style="background: linear-gradient(135deg, #001f3f 0%, #003d7a 100%); padding: 80px 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+                    <div class="text-center" style="margin-bottom: 40px;">
+                        <h2 style="color: white; font-size: 36px; font-weight: 700; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">Track Your Package</h2>
+                        <p style="color: rgba(255,255,255,0.9); font-size: 18px; margin-bottom: 0;">Track your package in real-time</p>
+                    </div>
+                    <!--Hero form -->
+                    <form (ngSubmit)="trackPackage()" class="search-box" #trackForm1="ngForm" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; max-width: 700px; margin: 0 auto;">
+                        <div class="input-form" style="flex: 1; min-width: 250px;">
+                            <input type="text" placeholder="Your Tracking ID" 
+                                   [(ngModel)]="trackingId" name="trackingId" required #trackingIdField1="ngModel"
+                                   style="width: 100%; padding: 15px 20px; border: none; border-radius: 5px; font-size: 16px;">
+                        </div>
+                        <div class="search-form">
+                            <button type="submit" [disabled]="isTracking || !trackForm1.valid" 
+                                    style="background: #f15f22; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-weight: 600; cursor: pointer; white-space: nowrap; font-size: 16px;">
+                                Track Package
+                            </button>
+                        </div>	
+                    </form>	
+                    <div *ngIf="!trackForm1.valid && trackForm1.touched" style="color: #ffdede; margin-top: 10px; font-size: 13px; text-align: center;">
+                        Please enter your tracking ID
+                    </div>
+                    <!-- Tracking Results -->
+                    <div *ngIf="trackingResult" class="mt-3" style="color: white; text-align: center; margin-top: 30px;">
+                        <div *ngIf="trackingResult.success && trackingResult.data" class="alert alert-success" style="background: rgba(76, 175, 80, 0.9); padding: 15px; border-radius: 5px; display: inline-block;">
+                            <strong>Package Found!</strong><br>
+                            Status: {{ trackingResult.data.status }}<br>
+                            <span *ngIf="trackingResult.data.estimatedDelivery">
+                                Estimated Delivery: {{ trackingResult.data.estimatedDelivery | date }}
+                            </span>
+                        </div>
+                        <div *ngIf="!trackingResult.success" class="alert alert-danger" style="background: rgba(244, 67, 54, 0.9); padding: 15px; border-radius: 5px; display: inline-block;">
+                            {{ trackingResult.message || 'Package not found' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Tracking Section End -->
+    
     <!--? our info Start -->
     <div class="our-info-area pt-70 pb-40">
         <div class="container">
@@ -156,12 +192,11 @@ import { PackageResponse } from '../models/package.model';
     </div>
     <!-- Categories Area End -->
     <!--? About Area Start -->
-    <div class="about-low-area padding-bottom">
+    <div class="about-low-area padding-bottom" style="overflow: hidden;">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <div class="about-caption mb-50">
-                        <!-- Section Tittle -->
+            <div class="row align-items-center" style="margin: 0 -15px;">
+                <div class="col-lg-6 col-md-12 order-2 order-lg-1" style="padding: 0 15px; margin-bottom: 30px;">
+                    <div class="about-caption mb-50" style="padding-right: 0;">
                         <div class="section-tittle mb-35">
                             <span>About QuickBox</span>
                             <h2>Fast Delivery Solutions That Save Your Valuable Time!</h2>
@@ -171,19 +206,10 @@ import { PackageResponse } from '../models/package.model';
                         <a routerLink="/about" class="btn">More About Us</a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <!-- about-img -->
-                    <div class="about-img ">
-                        <div class="about-font-img">
-                            <img [src]="'/assets/img/gallery/about2.jpg'" alt="QuickBox Delivery" 
-                                 (error)="onImageError($event, 'about2')"
-                                 style="max-width: 100%; height: auto;">
-                        </div>
-                        <div class="about-back-img d-none d-lg-block">
-                            <img [src]="'/assets/img/gallery/about1.jpg'" alt="QuickBox Services"
-                                 (error)="onImageError($event, 'about1')"
-                                 style="max-width: 100%; height: auto;">
-                        </div>
+                <div class="col-lg-6 col-md-12 order-1 order-lg-2" style="padding: 0 15px;">
+                    <div style="text-align: center; padding: 20px 0;">
+                        <img src="assets/img/pics/delivery.jpeg" alt="QuickBox Delivery"
+                             style="max-width: 100%; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: block; margin: 0 auto;">
                     </div>
                 </div>
             </div>
@@ -191,7 +217,7 @@ import { PackageResponse } from '../models/package.model';
     </div>
     <!-- About Area End -->
     <!--? contact-form start -->
-    <section class="contact-form-area section-bg  pt-115 pb-120 fix" data-background="assets/img/gallery/section_bg02.jpg">
+    <section class="contact-form-area section-bg pt-115 pb-120 fix" data-background="assets/img/gallery/section_bg02.jpg" style="background-size: cover; background-position: center; position: relative;">
         <div class="container">
             <div class="row justify-content-end">
                 <!-- Contact wrapper -->
@@ -661,16 +687,44 @@ import { PackageResponse } from '../models/package.model';
 </div>
       `,
   styles: [`
-    .is-invalid {
-      border-color: #dc3545 !important;
-      border-width: 2px !important;
+    :host { display: block; width: 100%; }
+    .home-main { margin: 0; padding: 0; max-width: none; }
+    .is-invalid { border-color: #dc3545 !important; border-width: 2px !important; }
+    .invalid-feedback { display: block; }
+    .hero-slider-wrapper {
+      width: 100vw; max-width: 100vw; min-height: 100vh; height: 100vh;
+      overflow: hidden; position: relative;
+      margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
     }
-    .invalid-feedback {
-      display: block;
+    .hero-slider-track {
+      display: flex; width: 100%; height: 100%; min-height: 100vh;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    .hero-slide {
+      flex: 0 0 100vw; width: 100vw; min-width: 100vw; height: 100vh; min-height: 100vh;
+      flex-shrink: 0;
+      background-size: contain !important; background-position: center center !important; background-repeat: no-repeat !important;
+    }
+    .hero-dot {
+      width: 12px; height: 12px; border-radius: 50%; border: 2px solid white;
+      background: transparent; cursor: pointer; padding: 0; transition: all 0.3s ease;
+    }
+    .hero-dot:hover, .hero-dot.active { background: #f15f22; border-color: #f15f22; }
   `]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
+  heroSlides = [
+    { image: 'assets/img/hero/h1_hero.jpg' },
+    { image: 'assets/img/hero/hero2.jpg' },
+    { image: 'assets/img/hero/about.jpg' },
+    { image: 'assets/img/pics/outside.jpeg' },
+    { image: 'assets/img/pics/team.jpeg' },
+    { image: 'assets/img/pics/9ACBBB17-8011-4D18-A1BC-58A91D8AB81A.jpg.jpeg' },
+    { image: 'assets/img/pics/coridor.jpeg' }
+  ];
+  currentSlide = 0;
+  private sliderInterval: any;
+
   trackingId = '';
   trackingResult: PackageResponse | null = null;
   isTracking = false;
@@ -691,14 +745,38 @@ export class HomeComponent {
   quoteErrorMessage = '';
 
   constructor(private apiService: ApiService) {}
+
+  ngOnInit(): void {
+    this.startSlider();
+  }
+
+  ngOnDestroy(): void {
+    this.pauseSlider();
+  }
+
+  startSlider(): void {
+    this.sliderInterval = setInterval(() => {
+      this.currentSlide = (this.currentSlide + 1) % this.heroSlides.length;
+    }, 5000);
+  }
+
+  pauseSlider(): void {
+    if (this.sliderInterval) {
+      clearInterval(this.sliderInterval);
+      this.sliderInterval = null;
+    }
+    setTimeout(() => this.startSlider(), 8000);
+  }
+
+  goToSlide(index: number): void {
+    this.currentSlide = index;
+  }
   
   onImageError(event: any, imageName: string): void {
-    console.error(`Failed to load image: ${imageName}.jpg`);
-    // Try alternative paths
-    if (imageName === 'about1') {
-      event.target.src = '/assets/img/gallery/about1.JPG';
-    } else if (imageName === 'about2') {
-      event.target.src = '/assets/img/gallery/about2.JPG';
+    if (imageName === 'about2') {
+      event.target.src = '/assets/img/gallery/about2.jpg';
+    } else {
+      event.target.src = '/assets/img/gallery/about2.jpg';
     }
   }
 

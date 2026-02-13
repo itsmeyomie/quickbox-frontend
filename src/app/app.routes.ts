@@ -22,6 +22,14 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/services.component').then(m => m.ServicesComponent)
       },
       { 
+        path: 'how-it-works', 
+        loadComponent: () => import('./pages/how-it-works.component').then(m => m.HowItWorksComponent)
+      },
+      { 
+        path: 'trust-proof', 
+        loadComponent: () => import('./pages/trust-proof.component').then(m => m.TrustProofComponent)
+      },
+      { 
         path: 'blog', 
         loadComponent: () => import('./pages/blog.component').then(m => m.BlogComponent)
       },
