@@ -18,7 +18,7 @@ import { Contact } from '../models/contact.model';
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="hero-cap" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-                                <h2>Contact QuickBox</h2>
+                                <h2>Contact Quick Box</h2>
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
@@ -37,7 +37,8 @@ import { Contact } from '../models/contact.model';
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="contact-title">Get in Touch</h2>
+                        <h2 class="contact-title">Speak Directly With the Team Handling Your Orders</h2>
+                        <p style="color: #666; font-size: 18px; line-height: 1.8; margin-top: 15px; max-width: 700px;">No sales pressure. No long-term commitments. Just clear answers from the operations team.</p>
                     </div>
                     <div class="col-lg-8">
                         <div *ngIf="successMessage" class="alert alert-success" role="alert">

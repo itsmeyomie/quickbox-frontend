@@ -35,9 +35,9 @@ import { RouterLink } from '@angular/router';
                     <div class="col-lg-12">
                         <!-- Section Tittle -->
                         <div class="section-tittle text-center mb-80">
-                            <span>QuickBox Services</span>
-                            <h2>Comprehensive Delivery Solutions</h2>
-                            <p>Professional logistics and delivery services tailored to meet all your shipping and storage needs in Nairobi, Kenya.</p>
+                            <span>Quick Box Services</span>
+                            <h2>Everything You Need to Deliver, Collect & Scale With Confidence</h2>
+                            <p>Professional fulfillment, warehousing, last-mile delivery, COD, and returns management—handled transparently and documented at every step.</p>
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@ import { RouterLink } from '@angular/router';
                 <div class="row mb-80">
                     <div class="col-lg-12">
                         <div class="section-tittle text-center mb-60">
-                            <h3 style="color: #333; font-size: 32px; font-weight: 700; margin-bottom: 20px;">Why Clients Choose Our Services</h3>
+                            <h3 style="color: #333; font-size: 32px; font-weight: 700; margin-bottom: 20px;">Core Services</h3>
                             <p style="color: #666; line-height: 1.8; font-size: 16px;">We deliver results that matter—reliability, peace of mind, and growth for your business.</p>
                         </div>
                     </div>
@@ -53,35 +53,35 @@ import { RouterLink } from '@angular/router';
                     <div class="col-lg-4 col-md-6 mb-40">
                         <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; border-top: 4px solid #f15f22;">
                             <h4 style="color: #333; font-size: 22px; font-weight: 700; margin-bottom: 20px;">Order Fulfillment</h4>
-                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">Stop juggling inventory and packing—we receive, store, pick, pack, and ship your orders seamlessly across Kenya. Hand us the complexity so you can focus on what you do best: growing your business.</p>
+                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">Juggling inventory and packing slows you down. We receive your inventory, accurately pick and pack orders, and dispatch them efficiently across Kenya. Each order is handled with care to minimize errors, delays, and customer dissatisfaction—so you can focus on growing your business.</p>
                         </div>
                     </div>
                     <!-- Last-Mile Delivery -->
                     <div class="col-lg-4 col-md-6 mb-40">
                         <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; border-top: 4px solid #667eea;">
-                            <h4 style="color: #333; font-size: 22px; font-weight: 700; margin-bottom: 20px;">Last-Mile Delivery</h4>
-                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">We deliver parcels accurately and professionally—right to your customer's doorstep. Our last-mile service and COD management turn one-time buyers into loyal repeat customers who trust your brand.</p>
+                            <h4 style="color: #333; font-size: 22px; font-weight: 700; margin-bottom: 20px;">Nationwide Last-Mile Delivery</h4>
+                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">We deliver across Kenya using trained riders and clear delivery protocols. Each handover is structured to improve delivery success rates and customer trust.</p>
                         </div>
                     </div>
                     <!-- Cash on Delivery -->
                     <div class="col-lg-4 col-md-6 mb-40">
                         <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; border-top: 4px solid #4caf50;">
-                            <h4 style="color: #333; font-size: 22px; font-weight: 700; margin-bottom: 20px;">Cash on Delivery</h4>
-                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">Our trained agents collect payments securely and remit funds on your preferred schedule. You get reliable cash flow without the hassle or risk of handling COD yourself.</p>
+                            <h4 style="color: #333; font-size: 22px; font-weight: 700; margin-bottom: 20px;">Cash on Delivery (COD)</h4>
+                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">Payments are collected securely from customers at delivery and reconciled transparently. You receive payouts based on clearly communicated and agreed timelines—no surprises, no delays.</p>
                         </div>
                     </div>
                     <!-- Warehousing -->
                     <div class="col-lg-4 col-md-6 mb-40">
                         <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; border-top: 4px solid #ff9800;">
                             <h4 style="color: #333; font-size: 22px; font-weight: 700; margin-bottom: 20px;">Warehousing</h4>
-                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">Secure, organized storage with competitive pricing—whether you need short-term or long-term. Your inventory stays protected and ready for dispatch, so order fulfillment runs smoothly.</p>
+                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">Your stock is stored in a secure, organized facility with documented handling. Inventory is structured for fast retrieval and smooth fulfillment, reducing losses and confusion.</p>
                         </div>
                     </div>
                     <!-- Returns Management -->
                     <div class="col-lg-4 col-md-6 mb-40">
                         <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%; border-top: 4px solid #9c27b0;">
                             <h4 style="color: #333; font-size: 22px; font-weight: 700; margin-bottom: 20px;">Returns Management</h4>
-                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">We manage exchanges transparently and keep you and your buyers informed at every step. A smooth returns process keeps customers happy and your brand reputation strong.</p>
+                            <p style="color: #666; line-height: 1.8; font-size: 15px; margin: 0;">Failed deliveries and customer returns are logged, documented, and processed transparently. Returned inventory is accounted for and safely managed. Both you and the buyer stay informed at every step.</p>
                         </div>
                     </div>
                 </div>

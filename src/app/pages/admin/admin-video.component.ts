@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { environment } from '../../../environments/environment';
+import { FirebaseDataService } from '../../services/firebase-data.service';
 
 @Component({
   selector: 'app-admin-video',
@@ -76,7 +73,7 @@ import { environment } from '../../../environments/environment';
         <h3 class="card-title">Video Preview</h3>
         <div class="video-preview">
           <video controls>
-            <source [src]="getVideoUrl()" type="video/mp4">
+            <source [src]="videoInfo?.url" type="video/mp4">
             Your browser does not support the video tag.
           </video>
         </div>
@@ -256,13 +253,8 @@ export class AdminVideoComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
   videoInfo: any = null;
-  private apiUrl = environment.apiUrl;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  constructor(private firebaseData: FirebaseDataService) {}
 
   ngOnInit(): void {
     this.loadVideoInfo();
@@ -299,29 +291,14 @@ export class AdminVideoComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
     
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-    
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    
-    this.http.post<any>(`${this.apiUrl}/videos/upload`, formData, { headers }).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.successMessage = 'Video uploaded successfully!';
-          this.selectedFile = null;
-          this.loadVideoInfo();
-        } else {
-          this.errorMessage = response.message || 'Upload failed';
-        }
-        this.uploading = false;
-      },
-      error: (error) => {
-        this.errorMessage = error.error?.message || 'Failed to upload video. Please try again.';
-        this.uploading = false;
-      }
+    this.firebaseData.uploadVideo(this.selectedFile).then(() => {
+      this.successMessage = 'Video uploaded successfully!';
+      this.selectedFile = null;
+      this.loadVideoInfo();
+      this.uploading = false;
+    }).catch((error) => {
+      this.errorMessage = error?.message || 'Failed to upload video. Please try again.';
+      this.uploading = false;
     });
   }
 
@@ -332,46 +309,27 @@ export class AdminVideoComponent implements OnInit {
   }
 
   loadVideoInfo(): void {
-    this.http.get<any>(`${this.apiUrl}/videos/info`).subscribe({
-      next: (response) => {
-        this.videoInfo = response;
-      },
-      error: (error) => {
-        console.error('Error loading video info:', error);
-        this.videoInfo = { exists: false };
-      }
+    this.firebaseData.getVideoInfo().then((info) => {
+      this.videoInfo = info;
+    }).catch((error) => {
+      console.error('Error loading video info:', error);
+      this.videoInfo = { exists: false };
     });
   }
 
   deleteVideo(): void {
     if (!confirm('Are you sure you want to delete this video?')) return;
     
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    
-    this.http.delete<any>(`${this.apiUrl}/videos/delete`, { headers }).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.successMessage = 'Video deleted successfully';
-          this.loadVideoInfo();
-        } else {
-          this.errorMessage = response.message || 'Failed to delete video';
-        }
-      },
-      error: (error) => {
-        this.errorMessage = error.error?.message || 'Failed to delete video';
-      }
+    this.firebaseData.deleteVideo().then(() => {
+      this.successMessage = 'Video deleted successfully';
+      this.loadVideoInfo();
+    }).catch((error) => {
+      this.errorMessage = error?.message || 'Failed to delete video';
     });
   }
 
-  getVideoUrl(): string {
-    return `${this.apiUrl}/videos/delivery-process`;
-  }
-
-  formatFileSize(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
+  formatFileSize(bytes: number | undefined): string {
+    if (bytes == null || bytes === 0) return bytes === 0 ? '0 Bytes' : 'N/A';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));

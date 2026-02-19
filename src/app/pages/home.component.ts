@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { FirebaseDataService } from '../services/firebase-data.service';
 import { QuoteRequest } from '../models/quote.model';
 import { PackageResponse } from '../models/package.model';
 
@@ -27,15 +28,14 @@ import { PackageResponse } from '../models/package.model';
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero__caption text-center" style="padding: 40px 0;">
-                            <h1 style="color: white; margin-bottom: 20px; font-size: clamp(28px, 5vw, 48px); font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); line-height: 1.2;">Fast & Reliable <span style="color: #f15f22;">QuickBox</span> Delivery!</h1>
-                            <p style="color: rgba(255,255,255,0.95); font-size: clamp(16px, 2.5vw, 20px); margin-bottom: 25px; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                                Your trusted fulfillment partner for e-commerce sellers. We receive, process, and deliver orders seamlessly across Kenya—from Nairobi to Kisumu and beyond.
+                            <h1 style="color: white; margin-bottom: 20px; font-size: clamp(24px, 4.5vw, 42px); font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); line-height: 1.2;">Reliable Fulfillment & Last-Mile Delivery for Growing E-Commerce Businesses in Kenya</h1>
+                            <p style="color: rgba(255,255,255,0.95); font-size: clamp(15px, 2.2vw, 18px); margin-bottom: 20px; max-width: 850px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                                Quick Box is a fulfillment and logistics partner built for online sellers who need dependable storage, accurate order fulfillment, nationwide delivery, secure Cash on Delivery (COD) handling, and transparent returns management—without the stress of managing logistics internally.
                             </p>
-                            <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
-                                <span style="color: white; font-size: clamp(14px, 2vw, 16px);"><strong style="color: #f15f22;">✓</strong> E-Commerce Sellers</span>
-                                <span style="color: white; font-size: clamp(14px, 2vw, 16px);"><strong style="color: #f15f22;">✓</strong> Countrywide Delivery</span>
-                                <span style="color: white; font-size: clamp(14px, 2vw, 16px);"><strong style="color: #f15f22;">✓</strong> Cash on Delivery (COD)</span>
-                            </div>
+                            <p style="color: rgba(255,255,255,0.9); font-size: clamp(13px, 1.8vw, 15px); margin-bottom: 25px; max-width: 750px; margin-left: auto; margin-right: auto; line-height: 1.6;">
+                                Transparent operations • Secure COD handling • Clear payout schedules • Full delivery documentation • Operational visibility at every stage
+                            </p>
+                            <a routerLink="/contact" class="btn" style="background: #f15f22; color: white; padding: 15px 35px; font-size: 16px; font-weight: 600; border-radius: 8px; text-decoration: none; display: inline-block; border: none;">Talk to Operations</a>
                         </div>
                     </div>
                 </div>
@@ -147,46 +147,98 @@ import { PackageResponse } from '../models/package.model';
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Section Tittle -->
-                    <div class="section-tittle text-center mb-80">
-                        <span>Our Services</span>
-                        <h2>What QuickBox Can Do For You</h2>
+                    <div class="section-tittle text-center mb-60">
+                        <span>Who This Is For</span>
+                        <h2>Built for Sellers Who Can't Afford Unreliable Logistics</h2>
+                        <p style="max-width: 700px; margin: 15px auto 0; color: #666; line-height: 1.8;">Quick Box is designed for businesses that have outgrown informal delivery solutions and need a structured, professional logistics partner they can trust with inventory, customer experience, and cash flow.</p>
                     </div>
                 </div>
             </div>
             <div class="row" style="margin: 0 -15px;">
-                <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                <div class="col-lg-6 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
                     <div class="single-cat text-center" style="height: 100%; display: flex; flex-direction: column; padding: 30px 20px;">
                         <div class="cat-icon" style="margin-bottom: 20px;">
                             <span class="flaticon-shipped"></span>
                         </div>
                         <div class="cat-cap" style="flex: 1;">
-                            <h5 style="margin-bottom: 15px; min-height: 60px; display: flex; align-items: center; justify-content: center;"><a routerLink="/services" style="text-decoration: none; color: inherit;">🚀 Same-Day Delivery (Within City)</a></h5>
-                            <p style="margin: 0; line-height: 1.8;">Fast and reliable delivery of parcels within the same city, ensuring urgent items reach their destination within hours.</p>
+                            <h5 style="margin-bottom: 15px; min-height: 50px; display: flex; align-items: center; justify-content: center;"><a routerLink="/services" style="text-decoration: none; color: inherit;">E-Commerce Sellers Handling Daily Orders</a></h5>
+                            <p style="margin: 0; line-height: 1.8;">Businesses processing consistent order volumes that need reliable fulfillment without hiring internal logistics teams.</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
-                    <div class="single-cat text-center" style="height: 100%; display: flex; flex-direction: column; padding: 30px 20px;">
-                        <div class="cat-icon" style="margin-bottom: 20px;">
-                            <span class="flaticon-ship"></span>
-                        </div>
-                        <div class="cat-cap" style="flex: 1;">
-                            <h5 style="margin-bottom: 15px; min-height: 60px; display: flex; align-items: center; justify-content: center;"><a routerLink="/services" style="text-decoration: none; color: inherit;">🏬 Warehousing & Storage</a></h5>
-                            <p style="margin: 0; line-height: 1.8;">Secure and well-managed storage solutions for short-term and long-term goods, with organized inventory handling and quick dispatch support.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                <div class="col-lg-6 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
                     <div class="single-cat text-center" style="height: 100%; display: flex; flex-direction: column; padding: 30px 20px;">
                         <div class="cat-icon" style="margin-bottom: 20px;">
                             <span class="flaticon-support"></span>
                         </div>
                         <div class="cat-cap" style="flex: 1;">
-                            <h5 style="margin-bottom: 15px; min-height: 60px; display: flex; align-items: center; justify-content: center;"><a routerLink="/services" style="text-decoration: none; color: inherit;">⚡ Express Parcel Delivery</a></h5>
-                            <p style="margin: 0; line-height: 1.8;">Priority handling and rapid transit for urgent parcels, offering the fastest delivery option with real-time tracking.</p>
+                            <h5 style="margin-bottom: 15px; min-height: 50px; display: flex; align-items: center; justify-content: center;"><a routerLink="/services" style="text-decoration: none; color: inherit;">Instagram & WhatsApp Businesses Scaling Fast</a></h5>
+                            <p style="margin: 0; line-height: 1.8;">Social commerce sellers who want to focus on marketing and sales while logistics, deliveries, and COD are handled professionally.</p>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                    <div class="single-cat text-center" style="height: 100%; display: flex; flex-direction: column; padding: 30px 20px;">
+                        <div class="cat-icon" style="margin-bottom: 20px;">
+                            <span class="flaticon-clock"></span>
+                        </div>
+                        <div class="cat-cap" style="flex: 1;">
+                            <h5 style="margin-bottom: 15px; min-height: 50px; display: flex; align-items: center; justify-content: center;"><a routerLink="/services" style="text-decoration: none; color: inherit;">SMEs Facing Failed Deliveries & COD Delays</a></h5>
+                            <p style="margin: 0; line-height: 1.8;">Businesses tired of lost parcels, unreliable riders, and unclear payment remittances.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                    <div class="single-cat text-center" style="height: 100%; display: flex; flex-direction: column; padding: 30px 20px;">
+                        <div class="cat-icon" style="margin-bottom: 20px;">
+                            <span class="flaticon-ship"></span>
+                        </div>
+                        <div class="cat-cap" style="flex: 1;">
+                            <h5 style="margin-bottom: 15px; min-height: 50px; display: flex; align-items: center; justify-content: center;"><a routerLink="/services" style="text-decoration: none; color: inherit;">Brands Seeking Professional Fulfillment</a></h5>
+                            <p style="margin: 0; line-height: 1.8;">Companies that want enterprise-level discipline without enterprise-level complexity or long-term contracts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Core Services Snapshot -->
+            <div class="section-tittle text-center mb-60 mt-80">
+                <span>Core Services</span>
+                <h2>Everything You Need to Deliver, Collect & Scale With Confidence</h2>
+            </div>
+            <div class="row" style="margin: 0 -15px;">
+                <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                    <div class="single-cat text-center" style="height: 100%; padding: 30px 20px; background: #f8f9fa; border-radius: 12px;">
+                        <h5 style="margin-bottom: 15px; color: #001f3f;"><a routerLink="/services" style="text-decoration: none; color: inherit;">Order Fulfillment</a></h5>
+                        <p style="margin: 0; line-height: 1.8; font-size: 15px;">We receive your inventory, accurately pick and pack orders, and dispatch them efficiently. Each order is handled with care to minimize errors, delays, and customer dissatisfaction.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                    <div class="single-cat text-center" style="height: 100%; padding: 30px 20px; background: #f8f9fa; border-radius: 12px;">
+                        <h5 style="margin-bottom: 15px; color: #001f3f;"><a routerLink="/services" style="text-decoration: none; color: inherit;">Warehousing</a></h5>
+                        <p style="margin: 0; line-height: 1.8; font-size: 15px;">Your stock is stored in a secure, organized facility with documented handling. Inventory is structured for fast retrieval and smooth fulfillment, reducing losses and confusion.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                    <div class="single-cat text-center" style="height: 100%; padding: 30px 20px; background: #f8f9fa; border-radius: 12px;">
+                        <h5 style="margin-bottom: 15px; color: #001f3f;"><a routerLink="/services" style="text-decoration: none; color: inherit;">Nationwide Last-Mile Delivery</a></h5>
+                        <p style="margin: 0; line-height: 1.8; font-size: 15px;">We deliver across Kenya using trained riders and clear delivery protocols. Each handover is structured to improve delivery success rates and customer trust.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                    <div class="single-cat text-center" style="height: 100%; padding: 30px 20px; background: #f8f9fa; border-radius: 12px;">
+                        <h5 style="margin-bottom: 15px; color: #001f3f;"><a routerLink="/services" style="text-decoration: none; color: inherit;">Cash on Delivery (COD)</a></h5>
+                        <p style="margin: 0; line-height: 1.8; font-size: 15px;">Payments are collected securely from customers at delivery and reconciled transparently. You receive payouts based on clearly communicated and agreed timelines.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6" style="padding: 0 15px; margin-bottom: 30px;">
+                    <div class="single-cat text-center" style="height: 100%; padding: 30px 20px; background: #f8f9fa; border-radius: 12px;">
+                        <h5 style="margin-bottom: 15px; color: #001f3f;"><a routerLink="/services" style="text-decoration: none; color: inherit;">Returns Management</a></h5>
+                        <p style="margin: 0; line-height: 1.8; font-size: 15px;">Failed deliveries and customer returns are logged, documented, and processed transparently. Returned inventory is accounted for and safely managed.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-40">
+                <a routerLink="/how-it-works" class="btn" style="background: #001f3f; color: white; padding: 15px 35px; border: none; border-radius: 8px;">See How It Works</a>
             </div>
         </div>
     </div>
@@ -198,12 +250,17 @@ import { PackageResponse } from '../models/package.model';
                 <div class="col-lg-6 col-md-12 order-2 order-lg-1" style="padding: 0 15px; margin-bottom: 30px;">
                     <div class="about-caption mb-50" style="padding-right: 0;">
                         <div class="section-tittle mb-35">
-                            <span>About QuickBox</span>
-                            <h2>Fast Delivery Solutions That Save Your Valuable Time!</h2>
+                            <span>A Simple, Transparent Fulfillment Process</span>
+                            <h2>How Quick Box Works</h2>
                         </div>
-                        <p>QuickBox is revolutionizing the delivery industry with innovative solutions that combine speed, reliability, and convenience. We understand that every package matters and every delivery deadline is critical.</p>
-                        <p>Our state-of-the-art logistics network ensures your packages reach their destination safely and on time, every time. Experience the QuickBox difference today.</p>
-                        <a routerLink="/about" class="btn">More About Us</a>
+                        <ul style="color: #555; line-height: 2; padding-left: 20px; margin-bottom: 25px;">
+                            <li>You send your inventory to Quick Box</li>
+                            <li>Orders come in from your website, social channels, or WhatsApp</li>
+                            <li>We pick, pack, and dispatch each order</li>
+                            <li>Deliveries are completed and COD collected securely</li>
+                            <li>Funds are reconciled and paid out on schedule</li>
+                        </ul>
+                        <a routerLink="/how-it-works" class="btn">View Full Process</a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12 order-1 order-lg-2" style="padding: 0 15px;">
@@ -417,10 +474,11 @@ import { PackageResponse } from '../models/package.model';
             <div class="row justify-content-center">
                 <div class="cl-xl-7 col-lg-8 col-md-10">
                     <!-- Section Tittle -->
-                    <div class="section-tittle text-center mb-70">
-                        <span>Why Choose Us</span>
-                        <h2>Your Trusted Delivery Partner in Nairobi</h2>
-                        <p style="color: #666; margin-top: 15px;">Experience the difference with QuickBox - where speed, reliability, and customer care come together</p>
+                    <div class="section-tittle text-center mb-50">
+                        <span>Final CTA</span>
+                        <h2>Start With Confidence</h2>
+                        <p style="color: #666; margin-top: 15px;">Test our service, experience our process, and scale without risk.</p>
+                        <a href="https://wa.me/254118047315" target="_blank" rel="noopener" class="btn" style="margin-top: 25px; background: #25D366; color: white; padding: 15px 35px; border: none; border-radius: 8px;">Chat With Operations</a>
                     </div> 
                 </div>
             </div>
@@ -502,9 +560,10 @@ import { PackageResponse } from '../models/package.model';
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-tittle text-center mb-80">
-                        <span style="color: rgba(255,255,255,0.9); font-size: 16px; letter-spacing: 2px;">Simple Process</span>
-                        <h2 style="color: white; margin-top: 15px; font-size: 42px;">How QuickBox Works</h2>
-                        <p style="color: rgba(255,255,255,0.9); margin-top: 20px; font-size: 18px; max-width: 600px; margin-left: auto; margin-right: auto;">Get your packages delivered in 3 simple steps</p>
+                        <span style="color: rgba(255,255,255,0.9); font-size: 16px; letter-spacing: 2px;">Trust Signals & Proof</span>
+                        <h2 style="color: white; margin-top: 15px; font-size: 42px;">Why Sellers Choose and Trust Quick Box</h2>
+                        <p style="color: rgba(255,255,255,0.9); margin-top: 20px; font-size: 18px; max-width: 700px; margin-left: auto; margin-right: auto;">Documented deliveries at every stage • Real operational photos and videos • Pilot and early-client testimonials • Clear service standards and guarantees</p>
+                        <p style="color: white; font-size: 20px; font-weight: 600; margin-top: 25px;">If we handle it, we document it—every order, every delivery, every payment.</p>
                     </div>
                 </div>
             </div>
@@ -546,10 +605,11 @@ import { PackageResponse } from '../models/package.model';
                     <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; text-align: center;">
                         <h3 style="color: white; font-size: 28px; margin-bottom: 30px; font-weight: 600;">Watch Our Delivery Process</h3>
                         <div style="background: #000; border-radius: 15px; overflow: hidden; max-width: 900px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
-                            <video controls style="width: 100%; max-height: 600px; display: block;">
-                                <source src="/assets/videos/Quickbox Web.MP4" type="video/mp4">
-                                <source src="/assets/videos/Quickbox Web.mp4" type="video/mp4">
-                                <source src="/assets/videos/delivery-process.mp4" type="video/mp4">
+                            <video #deliveryVideo controls style="width: 100%; max-height: 600px; display: block;">
+                                <source *ngIf="deliveryVideoUrl" [src]="deliveryVideoUrl" type="video/mp4">
+                                <source *ngIf="!deliveryVideoUrl" src="/assets/videos/Quickbox Web.MP4" type="video/mp4">
+                                <source *ngIf="!deliveryVideoUrl" src="/assets/videos/Quickbox Web.mp4" type="video/mp4">
+                                <source *ngIf="!deliveryVideoUrl" src="/assets/videos/delivery-process.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
@@ -712,7 +772,7 @@ import { PackageResponse } from '../models/package.model';
     .hero-dot:hover, .hero-dot.active { background: #f15f22; border-color: #f15f22; }
   `]
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewChecked {
   heroSlides = [
     { image: 'assets/img/hero/h1_hero.jpg' },
     { image: 'assets/img/hero/hero2.jpg' },
@@ -729,6 +789,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   trackingResult: PackageResponse | null = null;
   isTracking = false;
 
+  deliveryVideoUrl: string | null = null;
+  private lastVideoUrl: string | null = null;
+  private visibilityHandler: (() => void) | null = null;
+
+  @ViewChild('deliveryVideo') deliveryVideoEl?: ElementRef<HTMLVideoElement>;
+
   quote: QuoteRequest = {
     name: '',
     email: '',
@@ -744,14 +810,38 @@ export class HomeComponent implements OnInit, OnDestroy {
   quoteSuccessMessage = '';
   quoteErrorMessage = '';
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private firebaseData: FirebaseDataService
+  ) {}
 
   ngOnInit(): void {
     this.startSlider();
+    this.loadDeliveryVideo();
+    this.visibilityHandler = () => this.loadDeliveryVideo();
+    document.addEventListener('visibilitychange', this.visibilityHandler);
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.deliveryVideoUrl && this.deliveryVideoUrl !== this.lastVideoUrl && this.deliveryVideoEl?.nativeElement) {
+      this.lastVideoUrl = this.deliveryVideoUrl;
+      this.deliveryVideoEl.nativeElement.load();
+    }
+  }
+
+  loadDeliveryVideo(): void {
+    this.firebaseData.getVideoInfo().then((info) => {
+      if (info?.exists && info?.url) {
+        this.deliveryVideoUrl = info.url;
+      }
+    }).catch(() => {});
   }
 
   ngOnDestroy(): void {
     this.pauseSlider();
+    if (this.visibilityHandler) {
+      document.removeEventListener('visibilitychange', this.visibilityHandler);
+    }
   }
 
   startSlider(): void {

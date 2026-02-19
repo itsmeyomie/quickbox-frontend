@@ -36,10 +36,10 @@ import { RouterLink } from '@angular/router';
                     <div class="col-lg-12">
                         <!-- Section Tittle -->
                         <div class="section-tittle text-center mb-80">
-                            <span>Why Trust QuickBox</span>
-                            <h2>Can You Trust Us With Your Business?</h2>
+                            <span>Trust & Proof</span>
+                            <h2>Built on Documentation, Accountability, and Trust</h2>
                             <p style="max-width: 800px; margin: 20px auto 0; color: #666; line-height: 1.8; font-size: 16px;">
-                                Choosing the right fulfillment partner is a critical business decision. You're entrusting us with your inventory, your customers' experience, your cash (COD), and your brand reputation. Here's why thousands of e-commerce sellers trust QuickBox.
+                                Choosing the right fulfillment partner is a critical business decision. When Quick Box handles your orders, every action is documented. Nothing is hidden.
                             </p>
                         </div>
                     </div>
@@ -253,13 +253,13 @@ import { RouterLink } from '@angular/router';
                 <div class="row">
                     <div class="col-lg-12">
                         <div style="background: linear-gradient(135deg, #001f3f 0%, #003d7a 100%); padding: 60px 40px; border-radius: 20px; text-align: center; color: white;">
-                            <h3 style="color: white; font-size: 32px; font-weight: 700; margin-bottom: 20px;">Ready to Trust QuickBox?</h3>
+                            <h3 style="color: white; font-size: 32px; font-weight: 700; margin-bottom: 20px;">Ready to Trust Quick Box?</h3>
                             <p style="color: rgba(255,255,255,0.9); line-height: 1.8; font-size: 18px; max-width: 700px; margin: 0 auto 30px;">
-                                Start with our free Nairobi test delivery. Experience our process risk-free and see why e-commerce sellers trust us with their business.
+                                Start with confidence. Test our service, experience our process, and scale without risk.
                             </p>
                             <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                                <a routerLink="/contact" class="btn" style="background: #f15f22; color: white; padding: 18px 45px; font-size: 18px; font-weight: 600; border-radius: 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease;">
-                                    Get Free Test Delivery
+                                <a href="https://wa.me/254118047315" target="_blank" rel="noopener" class="btn" style="background: #25D366; color: white; padding: 18px 45px; font-size: 18px; font-weight: 600; border-radius: 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease;">
+                                    Chat With Operations
                                 </a>
                                 <a routerLink="/how-it-works" class="btn" style="background: transparent; color: white; padding: 18px 45px; font-size: 18px; font-weight: 600; border-radius: 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; border: 2px solid white;">
                                     Learn How It Works

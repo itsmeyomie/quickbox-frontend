@@ -37,9 +37,9 @@ import { RouterLink } from '@angular/router';
                         <!-- Section Tittle -->
                         <div class="section-tittle text-center mb-80">
                             <span>Our Process</span>
-                            <h2>How QuickBox Fulfillment Works</h2>
+                            <h2>How Quick Box Fulfillment Works</h2>
                             <p style="max-width: 800px; margin: 20px auto 0; color: #666; line-height: 1.8; font-size: 16px;">
-                                We've designed a simple, transparent process that removes uncertainty and builds trust. Here's exactly what happens from start to finish.
+                                Logistics should never feel uncertain. At Quick Box, we believe clarity builds trust. Every step is trackable, documented, and handled with full accountability.
                             </p>
                         </div>
                     </div>
@@ -54,7 +54,7 @@ import { RouterLink } from '@angular/router';
                                 <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f15f22 0%, #ff8c42 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 20px; flex-shrink: 0;">
                                     <span style="color: white; font-size: 28px; font-weight: bold;">1</span>
                                 </div>
-                                <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Seller Sends Inventory</h3>
+                                <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Inventory Receiving</h3>
                             </div>
                             <p style="color: #666; line-height: 1.8; font-size: 16px; margin: 0;">
                                 You send your inventory to our secure warehouse. We receive, inspect, and organize your products for efficient order fulfillment. Our warehouse team ensures everything is properly catalogued and ready for dispatch.
@@ -69,10 +69,10 @@ import { RouterLink } from '@angular/router';
                                 <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 20px; flex-shrink: 0;">
                                     <span style="color: white; font-size: 28px; font-weight: bold;">2</span>
                                 </div>
-                                <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Orders Received</h3>
+                                <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Order Processing</h3>
                             </div>
                             <p style="color: #666; line-height: 1.8; font-size: 16px; margin: 0;">
-                                Orders are placed on your website or sales platform and automatically shared with QuickBox via Google Sheets (mobile app and fully integrated API system coming soon). Our system processes each order immediately.
+                                Orders come in from your website, social channels, or WhatsApp and are shared with Quick Box via Google Sheets (mobile app and fully integrated API system coming soon). Our system processes each order immediately.
                             </p>
                         </div>
                     </div>
@@ -84,10 +84,10 @@ import { RouterLink } from '@angular/router';
                                 <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 20px; flex-shrink: 0;">
                                     <span style="color: white; font-size: 28px; font-weight: bold;">3</span>
                                 </div>
-                                <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Call Centre Processing</h3>
+                                <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Packing & Dispatch</h3>
                             </div>
                             <p style="color: #666; line-height: 1.8; font-size: 16px; margin: 0;">
-                                Our dedicated Call Centre Team processes each order, scheduling deliveries through customer confirmation calls. We make up to 3 call attempts and follow up for 3 consecutive days if a client is unreachable—ensuring no order is missed.
+                                Our Operations Team picks, packs, and prepares parcels for dispatch. Nairobi & express orders ship the same day; outbound parcels reach their destination within 24 hours. Professional packing and optional custom branding are available.
                             </p>
                         </div>
                     </div>
@@ -102,7 +102,7 @@ import { RouterLink } from '@angular/router';
                                 <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Delivery & COD Collection</h3>
                             </div>
                             <p style="color: #666; line-height: 1.8; font-size: 16px; margin: 0;">
-                                Our Operations Team prepares parcels for dispatch. Nairobi & express orders ship the same day; outbound parcels reach their destination within 24 hours. For COD orders, our agents collect payment and remit funds based on your preferred schedule.
+                                Our trained riders and agents deliver across Kenya using clear delivery protocols. For COD orders, payments are collected securely at delivery and reconciled transparently. Each handover is documented to improve delivery success rates.
                             </p>
                         </div>
                     </div>
@@ -117,7 +117,7 @@ import { RouterLink } from '@angular/router';
                                 <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Returns Handling</h3>
                             </div>
                             <p style="color: #666; line-height: 1.8; font-size: 16px; margin: 0;">
-                                In case of defects or mismatched specifications, we facilitate exchanges while keeping both you and the buyer fully informed at every step. Our returns process is transparent and efficient.
+                                Failed deliveries and customer returns are logged, documented, and processed transparently. Returned inventory is accounted for and safely managed. Both you and the buyer stay informed at every step.
                             </p>
                         </div>
                     </div>
@@ -132,7 +132,7 @@ import { RouterLink } from '@angular/router';
                                 <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">COD Payout Timeline</h3>
                             </div>
                             <p style="color: #666; line-height: 1.8; font-size: 16px; margin: 0;">
-                                For Cash on Delivery orders, our agents collect payment and remit funds or payment confirmations based on your preferred remittance schedule. You choose the frequency that works best for your cash flow.
+                                COD payments are reconciled transparently and paid out based on clearly communicated and agreed timelines. You receive funds on schedule—no surprises, no delays.
                             </p>
                         </div>
                     </div>
@@ -142,9 +142,9 @@ import { RouterLink } from '@angular/router';
                 <div class="row mt-80">
                     <div class="col-lg-12">
                         <div style="background: linear-gradient(135deg, #001f3f 0%, #003d7a 100%); padding: 60px 40px; border-radius: 20px; text-align: center; color: white;">
-                            <h3 style="color: white; font-size: 32px; font-weight: 700; margin-bottom: 20px;">Why This Process Builds Trust</h3>
+                            <h3 style="color: white; font-size: 32px; font-weight: 700; margin-bottom: 20px;">Every Step Is Trackable and Documented</h3>
                             <p style="color: rgba(255,255,255,0.9); line-height: 1.8; font-size: 18px; max-width: 800px; margin: 0 auto 30px;">
-                                Uncertainty kills conversions. Our step-by-step process removes fear by replacing assumptions with clarity. You know exactly what happens at every stage, and we keep you informed throughout.
+                                If we handle it, we document it—every order, every delivery, every payment. Nothing is hidden. Our process removes uncertainty and builds trust at every stage.
                             </p>
                             <div class="row" style="margin-top: 40px;">
                                 <div class="col-lg-4 col-md-4 mb-30">
@@ -173,8 +173,8 @@ import { RouterLink } from '@angular/router';
                 <!-- CTA Section -->
                 <div class="row mt-60">
                     <div class="col-lg-12 text-center">
-                        <a routerLink="/contact" class="btn" style="background: #f15f22; color: white; padding: 18px 45px; font-size: 18px; font-weight: 600; border-radius: 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(241,95,34,0.3);">
-                            Get Started Today
+                        <a href="https://wa.me/254118047315" target="_blank" rel="noopener" class="btn" style="background: #25D366; color: white; padding: 18px 45px; font-size: 18px; font-weight: 600; border-radius: 10px; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(37,211,102,0.3);">
+                            Talk to Our Operations Team
                         </a>
                     </div>
                 </div>

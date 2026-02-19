@@ -14,7 +14,7 @@ import {
   Timestamp,
   serverTimestamp
 } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, deleteObject, getMetadata } from 'firebase/storage';
 import { db, storage } from '../config/firebase.config';
 
 @Injectable({
@@ -393,8 +393,8 @@ export class FirebaseDataService {
   async getVideoInfo(): Promise<any> {
     try {
       const videoRef = ref(storage, `videos/delivery-process.mp4`);
-      const url = await getDownloadURL(videoRef);
-      return { exists: true, url, fileName: 'delivery-process.mp4' };
+      const [url, metadata] = await Promise.all([getDownloadURL(videoRef), getMetadata(videoRef)]);
+      return { exists: true, url, fileName: 'delivery-process.mp4', fileSize: metadata.size };
     } catch (error: any) {
       return { exists: false };
     }

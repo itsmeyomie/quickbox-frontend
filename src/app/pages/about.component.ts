@@ -35,23 +35,23 @@ import { RouterLink } from '@angular/router';
                     <div class="col-lg-6 col-md-12 order-2 order-lg-1" style="padding: 0 15px; margin-bottom: 30px;">
                         <div class="about-caption mb-50" style="padding-right: 0;">
                             <div class="section-tittle mb-35">
-                                <span>About QuickBox</span>
-                                <h2>Fast Delivery Solutions That Save Your Valuable Time!</h2>
+                                <span>About Quick Box</span>
+                                <h2>Removing Logistics Uncertainty for Online Sellers</h2>
                             </div>
 
                             <div class="about-focus-div" style="background: #f8f9fa; padding: 30px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid #f15f22;">
                                 <h4 style="color: #001f3f; font-size: 22px; font-weight: 700; margin-bottom: 15px;">Mission</h4>
-                                <p style="margin: 0; color: #555; line-height: 1.8;">To revolutionize the delivery industry by providing fast, reliable, and innovative shipping solutions. We understand that in today's fast-paced world, every minute counts—and we exist to get your packages where they need to be, when they need to be there.</p>
+                                <p style="margin: 0; color: #555; line-height: 1.8;">Quick Box exists to remove logistics uncertainty for online sellers. We believe businesses grow faster when fulfillment, delivery, and payments are handled transparently and professionally.</p>
                             </div>
 
                             <div class="about-focus-div" style="background: #f8f9fa; padding: 30px; border-radius: 12px; margin-bottom: 25px; border-left: 4px solid #003d7a;">
                                 <h4 style="color: #001f3f; font-size: 22px; font-weight: 700; margin-bottom: 15px;">Operational Philosophy</h4>
-                                <p style="margin: 0; color: #555; line-height: 1.8;">We combine a state-of-the-art logistics network with cutting-edge technology to ensure every package reaches its destination safely and on time. We operate with precision, accountability, and a relentless focus on quality—because excellence in every delivery is non-negotiable.</p>
+                                <p style="margin: 0; color: #555; line-height: 1.8;">Clarity before speed. Documentation before promises. Trust before scale.</p>
                             </div>
 
                             <div class="about-focus-div" style="background: #f8f9fa; padding: 30px; border-radius: 12px; margin-bottom: 30px; border-left: 4px solid #4caf50;">
                                 <h4 style="color: #001f3f; font-size: 22px; font-weight: 700; margin-bottom: 15px;">Commitment to Trust & Transparency</h4>
-                                <p style="margin: 0; color: #555; line-height: 1.8;">We believe that logistics is built on trust. You trust us with your inventory, your customers' experience, your cash (COD), and your brand. We respond with full transparency—clear processes, real-time tracking, honest communication, and timely remittance. No surprises, no hidden gaps.</p>
+                                <p style="margin: 0; color: #555; line-height: 1.8;">When Quick Box handles your orders, every action is documented. Nothing is hidden. You trust us with your inventory, your customers' experience, your cash (COD), and your brand—we respond with full transparency, clear processes, and timely remittance.</p>
                             </div>
 
                             <a routerLink="/contact" class="btn">Get In Touch</a>
