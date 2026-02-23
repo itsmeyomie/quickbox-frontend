@@ -221,7 +221,7 @@ import { RouterLink } from '@angular/router';
                                         <span class="flaticon-support" style="font-size: 30px; color: white;"></span>
                                     </div>
                                     <h5 style="color: #333; font-size: 20px; font-weight: 600; margin-bottom: 15px;">2. Order Integration</h5>
-                                    <p style="color: #666; line-height: 1.8; margin: 0;">Orders are shared with Quick Box via Google Sheets (with a mobile app and fully integrated API system currently near completion).</p>
+                                    <p style="color: #666; line-height: 1.8; margin: 0;">We have mastered the art of integration. Quick Box seamlessly connects with any system you use—from Google Sheets and WhatsApp to custom e-commerce platforms, marketplaces, and APIs. Your orders flow in; we handle the rest.</p>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 mb-30">

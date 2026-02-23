@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { NgIf, NgFor, CommonModule } from '@angular/common';
+import { PopupBannerComponent } from '../components/popup-banner.component';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, PopupBannerComponent],
   template: `
+<app-popup-banner></app-popup-banner>
 <header>
     <!-- Header Start -->
     <div class="header-area">

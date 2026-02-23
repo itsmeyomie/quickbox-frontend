@@ -72,7 +72,7 @@ import { RouterLink } from '@angular/router';
                                 <h3 style="color: #333; font-size: 24px; font-weight: 700; margin: 0;">Order Processing</h3>
                             </div>
                             <p style="color: #666; line-height: 1.8; font-size: 16px; margin: 0;">
-                                Orders come in from your website, social channels, or WhatsApp and are shared with Quick Box via Google Sheets (mobile app and fully integrated API system coming soon). Our system processes each order immediately.
+                                Orders come in from your website, social channels, or WhatsApp and flow into Quick Box through our integration platform. We seamlessly connect with any system—e-commerce platforms, marketplaces, Google Sheets, or custom APIs. Our system processes each order immediately.
                             </p>
                         </div>
                     </div>

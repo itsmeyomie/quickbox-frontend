@@ -475,7 +475,6 @@ import { PackageResponse } from '../models/package.model';
                 <div class="cl-xl-7 col-lg-8 col-md-10">
                     <!-- Section Tittle -->
                     <div class="section-tittle text-center mb-50">
-                        <span>Final CTA</span>
                         <h2>Start With Confidence</h2>
                         <p style="color: #666; margin-top: 15px;">Test our service, experience our process, and scale without risk.</p>
                         <a href="https://wa.me/254118047315" target="_blank" rel="noopener" class="btn" style="margin-top: 25px; background: #25D366; color: white; padding: 15px 35px; border: none; border-radius: 8px;">Chat With Operations</a>

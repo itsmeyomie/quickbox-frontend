@@ -115,42 +115,90 @@ import { RouterLink } from '@angular/router';
                     <div class="col-lg-12">
                         <div class="section-tittle text-center mb-60">
                             <h3 style="color: #333; font-size: 32px; font-weight: 700; margin-bottom: 20px;">What Our Clients Say</h3>
-                            <p style="color: #666; line-height: 1.8; font-size: 16px;">Real feedback from e-commerce sellers who trust QuickBox</p>
+                            <p style="color: #666; line-height: 1.8; font-size: 16px;">Real feedback from e-commerce sellers who trust Quick Box</p>
                         </div>
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 mb-30">
+                            <div class="col-lg-6 col-md-6 mb-30">
                                 <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%;">
                                     <div style="color: #f15f22; font-size: 48px; margin-bottom: 20px;">"</div>
                                     <p style="color: #666; line-height: 1.8; font-size: 16px; margin-bottom: 25px; font-style: italic;">
-                                        QuickBox has transformed our fulfillment process. Their COD collection is reliable, and we get our payouts on time. Highly recommended for e-commerce sellers.
+                                        Quick Box has transformed our fulfillment process. Their COD collection is reliable, and we get our payouts on time. Highly recommended for e-commerce sellers.
                                     </p>
                                     <div style="border-top: 1px solid #eee; padding-top: 20px;">
-                                        <strong style="color: #333; font-size: 18px;">Sarah M.</strong>
-                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">E-Commerce Seller, Nairobi</p>
+                                        <strong style="color: #333; font-size: 18px;">Wei Chen</strong>
+                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">E-Commerce Seller, Shanghai, China</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 mb-30">
+                            <div class="col-lg-6 col-md-6 mb-30">
                                 <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%;">
                                     <div style="color: #f15f22; font-size: 48px; margin-bottom: 20px;">"</div>
                                     <p style="color: #666; line-height: 1.8; font-size: 16px; margin-bottom: 25px; font-style: italic;">
-                                        The transparency and communication from QuickBox is outstanding. We always know where our orders are, and their customer service team is responsive.
+                                        The transparency and communication from Quick Box is outstanding. We always know where our orders are, and their customer service team is responsive.
                                     </p>
                                     <div style="border-top: 1px solid #eee; padding-top: 20px;">
-                                        <strong style="color: #333; font-size: 18px;">James K.</strong>
-                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">Online Retailer, Kisumu</p>
+                                        <strong style="color: #333; font-size: 18px;">Karim Benali</strong>
+                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">Online Retailer, Casablanca, Morocco</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6 mb-30">
+                            <div class="col-lg-6 col-md-6 mb-30">
                                 <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%;">
                                     <div style="color: #f15f22; font-size: 48px; margin-bottom: 20px;">"</div>
                                     <p style="color: #666; line-height: 1.8; font-size: 16px; margin-bottom: 25px; font-style: italic;">
-                                        Their warehouse facilities are secure and well-organized. We've been using QuickBox for over a year, and they've never let us down.
+                                        Their warehouse facilities are secure and well-organized. We've been using Quick Box for over a year, and they've never let us down.
                                     </p>
                                     <div style="border-top: 1px solid #eee; padding-top: 20px;">
-                                        <strong style="color: #333; font-size: 18px;">Mary W.</strong>
-                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">Fashion E-Commerce, Nairobi</p>
+                                        <strong style="color: #333; font-size: 18px;">Adeola Okafor</strong>
+                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">Fashion E-Commerce, Lagos, Nigeria</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-30">
+                                <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%;">
+                                    <div style="color: #f15f22; font-size: 48px; margin-bottom: 20px;">"</div>
+                                    <p style="color: #666; line-height: 1.8; font-size: 16px; margin-bottom: 25px; font-style: italic;">
+                                        Professional, reliable, and transparent. Quick Box has become an essential partner for our operations in East Africa.
+                                    </p>
+                                    <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                                        <strong style="color: #333; font-size: 18px;">Hiroshi Tanaka</strong>
+                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">E-Commerce Seller, Tokyo, Japan</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-30">
+                                <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%;">
+                                    <div style="color: #f15f22; font-size: 48px; margin-bottom: 20px;">"</div>
+                                    <p style="color: #666; line-height: 1.8; font-size: 16px; margin-bottom: 25px; font-style: italic;">
+                                        As a listed company, we need partners who operate with the same rigour we do. Quick Box’s documented processes and reliable COD handling have made them our go-to logistics partner across Kenya.
+                                    </p>
+                                    <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                                        <strong style="color: #333; font-size: 18px;">James Mutua</strong>
+                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">Head of Supply Chain, Corporate Division, Nairobi, Kenya</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-30">
+                                <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%;">
+                                    <div style="color: #f15f22; font-size: 48px; margin-bottom: 20px;">"</div>
+                                    <p style="color: #666; line-height: 1.8; font-size: 16px; margin-bottom: 25px; font-style: italic;">
+                                        Our business grew faster once we handed logistics to Quick Box. Same-day delivery in Nairobi and transparent COD payouts—exactly what a growing SME needs.
+                                    </p>
+                                    <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                                        <strong style="color: #333; font-size: 18px;">Wanjiku Kamau</strong>
+                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">Business Owner, Westlands, Nairobi, Kenya</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-30">
+                                <div style="background: white; padding: 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); height: 100%;">
+                                    <div style="color: #f15f22; font-size: 48px; margin-bottom: 20px;">"</div>
+                                    <p style="color: #666; line-height: 1.8; font-size: 16px; margin-bottom: 25px; font-style: italic;">
+                                        Time-sensitive medical supplies require precision. Quick Box delivers reliably, with full documentation at every step. They are our trusted partner for medical courier services.
+                                    </p>
+                                    <div style="border-top: 1px solid #eee; padding-top: 20px;">
+                                        <strong style="color: #333; font-size: 18px;">Dr. Peter Otieno</strong>
+                                        <p style="color: #999; font-size: 14px; margin: 5px 0 0 0;">Medical Supplies & Pharmaceuticals, Nairobi, Kenya</p>
                                     </div>
                                 </div>
                             </div>
